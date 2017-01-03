@@ -1,0 +1,81 @@
+h1 {
+  margin: 10px;
+  padding: 5px;
+  text-align: center;
+  border: solid 1px #CCC;
+  font-family: arial;
+}
+
+.corps {
+  margin: auto;
+  margin-top: 50px;
+  padding-top: 1px;
+  width: 80%;
+  align-items: center;
+  background-color: #EEE;
+}
+
+.stock {
+  width: 25%;
+}
+
+.utilisateur {
+  background-color: black;
+  color: white;
+}
+
+.quantite {
+  padding: 3px;
+  font-size: 15px;
+  width: 40%;
+  height: 80%;
+  text-align: center;
+  border-style: hidden;
+}
+.button {
+  display: inline-block;
+  border: none;
+  padding: 10px;
+  background-color: lightgreen;
+  border: solid 1px;
+}
+
+.button2 {
+  padding: 0px;
+  font-size: 15px;
+  display: inline-block;
+  border: none;
+  background-color: #FFF;
+  width: 20%;
+  height: 80%;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-spacing: 10px;
+  width: 100%;
+
+}
+
+th {
+  border: 1px solid #DDD;
+  text-align: left;
+  padding: 8px;
+  background-color: #000;
+  color: #FFF;
+}
+
+td {
+  border: 0px solid #DDD;
+  text-align: left;
+  padding: 8px;
+}
+
+
+tr:nth-child(even) {
+  background-color: #DDD;
+}
+
+tr:nth-child(odd) {
+  background-color: #CCC;
+}
