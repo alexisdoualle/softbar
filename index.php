@@ -23,11 +23,15 @@
           </tr>
           <tr ng-repeat="item in resultat">
             <td>{{item.produit}}</td>
-            <td style="item-align:center"><input type="button" ng-click="vendre(item)" value="VENDRE" class="button"></td>
+            <td style="item-align:center">
+              <input type="button" ng-click="vendre(item)" value="VENDRE" class="buttonVendre">
+              <input type="button" ng-click="annulerVendre(item)" value="Annuler" class="buttonAnnuler">
+            </td>
             <td class="stock">
               <input type="number" ng-model="item.stock" class="quantite">
-              <input type="button" name="" value="+" ng-click="increment(item)" class="button2">
-              <input type="button" name="" value="-" ng-click="decrement(item)" class="button2">
+              <input type="button" name="" value="valider" ng-click="set(item)" class="buttonValider">
+              <!--<input type="button" name="" value="+" ng-click="increment(item)" class="button2">-->
+              <!--<input type="button" name="" value="-" ng-click="decrement(item)" class="button2">-->
             </td>
             <td>{{item.prix | number:2}} €</td>
             <td>{{item.ventes}}</td>

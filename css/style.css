@@ -16,7 +16,7 @@ h1 {
 }
 
 .stock {
-  width: 25%;
+  width: 30%;
 }
 
 .utilisateur {
@@ -27,16 +27,26 @@ h1 {
 .quantite {
   padding: 3px;
   font-size: 15px;
-  width: 40%;
+  width: 35%;
   height: 80%;
   text-align: center;
   border-style: hidden;
 }
-.button {
+.buttonVendre {
   display: inline-block;
+  margin: auto;
   border: none;
   padding: 10px;
   background-color: lightgreen;
+  border: solid 1px;
+}
+
+.buttonAnnuler {
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 10px;
+  background-color: lightcoral;
   border: solid 1px;
 }
 
@@ -46,8 +56,19 @@ h1 {
   display: inline-block;
   border: none;
   background-color: #FFF;
-  width: 20%;
+  width: 15%;
   height: 80%;
+}
+
+.buttonValider {
+  padding: 5px;
+  margin-left: 11px;
+  font-size: 15px;
+  display: inline-block;
+  border: solid 1px;
+  background-color: lightblue;
+  width: 40%;
+
 }
 
 table {
