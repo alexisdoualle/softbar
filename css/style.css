@@ -19,6 +19,7 @@ h1 {
   width: 30%;
 }
 
+
 .utilisateur {
   background-color: black;
   color: white;
@@ -63,12 +64,15 @@ h1 {
 .buttonValider {
   padding: 5px;
   margin-left: 11px;
-  font-size: 15px;
   display: inline-block;
   border: solid 1px;
   background-color: lightblue;
-  width: 40%;
+  width: 50%;
 
+}
+
+span {
+  padding: 10px;
 }
 
 table {
@@ -79,7 +83,7 @@ table {
 }
 
 th {
-  border: 1px solid #DDD;
+  border: 1px solid #000;
   text-align: left;
   padding: 8px;
   background-color: #000;
