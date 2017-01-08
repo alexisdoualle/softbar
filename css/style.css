@@ -9,6 +9,7 @@ h1 {
 .corps {
   margin: auto;
   margin-top: 50px;
+  padding-bottom: 6px;
   padding-top: 1px;
   width: 80%;
   align-items: center;

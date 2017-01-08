@@ -9,13 +9,11 @@ if ($conn->connect_error) {
 }
 
 $produit = mysqli_real_escape_string($conn,$data->produit);
-$stock = mysqli_real_escape_string($conn,$data->stock);
+$quantite = mysqli_real_escape_string($conn,$data->quantite);
 $prix = mysqli_real_escape_string($conn,$data->prix);
-$ventes = mysqli_real_escape_string($conn,$data->ventes);
 
 
-$sql = "UPDATE CaisseVL SET `stock`=$stock, `ventes`=$ventes WHERE `produit`='".$produit."'";
-
+$sql = "UPDATE Stock SET `quantite`=$quantite WHERE `produit`='".$produit."'";
 
 if(mysqli_query($conn,$sql)) {
   echo "Mise à jour des données réussie";
