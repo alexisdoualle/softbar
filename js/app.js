@@ -14,9 +14,6 @@ app.controller('mainCtrl', function($scope, $http) {
     console.log($scope.ventes);
   });
 
-  $scope.compterVentes = function(prod) {
-
-  }
 
   //met à jour la base de données avec $scope.vendre
   updateDB = function(item) {
@@ -27,6 +24,8 @@ app.controller('mainCtrl', function($scope, $http) {
       .success(function(data,status,headers,config){
         console.log("Data Sent Successfully");
       });
+
+
   }
 
   //valide la valeur de stock entrée par l'utilisateur dans le bouton 'set'
