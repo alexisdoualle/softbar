@@ -11,21 +11,27 @@ app.controller('mainCtrl', function($scope, $http) {
   $http.get("php/ventes.php")
   .then(function(response) {
     $scope.ventes = response.data.resultat;
-    console.log($scope.ventes);
   });
-
 
   //met à jour la base de données avec $scope.vendre
   updateDB = function(item) {
     $http.post("php/insert.php", {
       "produit":item.produit,
       "quantite":item.quantite,
-      "prix":item.prix})
+      "prix":item.prix
+      })
       .success(function(data,status,headers,config){
         console.log("Data Sent Successfully");
       });
-
-
+  }
+  updateDBVentes = function(item) {
+    $http.post("php/insertVente.php", {
+      "produit":item.produit,
+      "vendeur":'alex'
+    })
+    .success(function(data, status, headers, config) {
+      console.log("Data Sent Successfully");
+    });
   }
 
   //valide la valeur de stock entrée par l'utilisateur dans le bouton 'set'
@@ -49,8 +55,9 @@ app.controller('mainCtrl', function($scope, $http) {
   $scope.vendre = function(item) {
     if(item.quantite > 0) {
       item.quantite--;
-      //item.ventes++;
+      $scope.ventes.push({"produit":item.produit});
       updateDB(item);
+      updateDBVentes(item);
     }
   } //fin de vendre()
 

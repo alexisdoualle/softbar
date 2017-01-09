@@ -9,18 +9,16 @@ if ($conn->connect_error) {
 }
 
 $produit = mysqli_real_escape_string($conn,$data->produit);
-$quantite = mysqli_real_escape_string($conn,$data->quantite);
-$prix = mysqli_real_escape_string($conn,$data->prix);
+$vendeur = mysqli_real_escape_string($conn,$data->vendeur);
 
-$sql = "UPDATE Stock SET `quantite`=$quantite WHERE `produit`='".$produit."'";
+$sql = "INSERT INTO `Ventes`(`vendeur`, `produit`) VALUES ('alex', '".$produit."')";
 
 
 if(mysqli_query($conn,$sql)) {
-  echo "Mise à jour des données réussie dans 'Stock'";
+  echo "Mise à jour des données réussie dans 'Ventes'";
 } else {
   echo "Erreur dans la mise à jour des données: " . mysqli_error($conn);
 }
-
 
 mysqli_close($conn);
 
