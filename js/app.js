@@ -1,17 +1,32 @@
 app = angular.module('softbar', []);
 
+
 app.controller('mainCtrl', function($scope, $http) {
+
+  $scope.ojd = new Date();
+  var month = $scope.ojd.getUTCMonth() + 1; //months from 1-12
+  var day = $scope.ojd.getUTCDate();
+  var year = $scope.ojd.getUTCFullYear();
+
+  $scope.today = year + "-" + (month < 10 ? '0' + month : '' + month) + "-" + (day < 10 ? '0' + day : '' + day);
+  $scope.thisMonth = year + "-" + (month < 10 ? '0' + month : '' + month);
+
   //se connecte à la DB pour obtenir les informations de caisse et les mets dans $scope.stock
   $http.get("php/caisse.php")
   .success(function(data, status, headers, config) {
       $scope.stock = data.resultat;
     });
 
+
   // de même pour les ventes:
-  $http.get("php/ventes.php")
-  .then(function(response) {
-    $scope.ventes = response.data.resultat;
-  });
+  getVentes = function() {
+    $http.get("php/ventes.php")
+    .then(function(response) {
+      $scope.ventes = response.data.resultat;
+    });
+  }
+  $scope.getVentes = getVentes();
+
 
   //met à jour la base de données avec $scope.vendre
   updateDB = function(item) {
@@ -31,6 +46,15 @@ app.controller('mainCtrl', function($scope, $http) {
     })
     .success(function(data, status, headers, config) {
       console.log("Data Sent Successfully");
+    });
+  }
+
+  deleteItem = function(item) {
+    $http.post("php/deleteitem.php", {
+      "produit":item.produit
+    })
+    .success(function(data, status, headers, config) {
+      console.log("Deleted Successfully");
     });
   }
 
@@ -55,16 +79,29 @@ app.controller('mainCtrl', function($scope, $http) {
   $scope.vendre = function(item) {
     if(item.quantite > 0) {
       item.quantite--;
-      $scope.ventes.push({"produit":item.produit});
+      $scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
       updateDB(item);
       updateDBVentes(item);
+
     }
   } //fin de vendre()
 
   //annuler vendre un item:
   $scope.annulerVendre = function(item) {
-    item.quantite++;
-    //item.ventes--;
-    updateDB(item);
+    function trouverItem(liste) { //fonction trouvant le premier objet contenant item.produit dans ventes[]
+      return liste.produit === item.produit;
+    }
+    indexItem = $scope.ventes.findIndex(trouverItem); //trouve l'index de l'item si il existe (!= -1)
+    //vérifie qu'il y ait au moins une vente correspondant à l'item:
+    if (indexItem != -1) {
+      deleteItem(item); // appelle le formulaire et met à jour la bdd
+      item.quantite++;
+      updateDB(item);
+      getVentes(); //rafraichit $scope.ventes
+    }
+
   } //fin de annulerVendre()
+
+
+
 });

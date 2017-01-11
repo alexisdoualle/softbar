@@ -22,8 +22,8 @@
             <th>Stock</th>
             <th>Prix</th>
             <th>Jour</th>
-            <th>Sem.</th>
             <th>Mois</th>
+            <th>Total</th>
           </tr>
           <tr ng-repeat="item in stock">
             <td>{{item.produit}}</td>
@@ -36,13 +36,21 @@
               <input type="button" name="" value="mettre à jour" ng-click="set(item)" class="buttonValider">
             </td>
             <td>{{item.prix | number:2}} €</td>
-            <td>{{(ventes | filter:{'produit':item.produit}).length }}</td>
-            <td></td>
-            <td></td>
+            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
           </tr>
         </table>
-        <span>Utilisateur: <?php echo $util ?></span>
-        <span>Se <a href="php/logout.php">déconnecter</a></span>
+        <table>
+          <tr>
+            <td>
+              <span>Utilisateur: <span style=""><?php echo $util ?></span> </span>
+              <span>Se <a href="php/logout.php">déconnecter</a></span>
+            </td>
+
+          </tr>
+        </table>
+
     </div>
   </body>
 </html>

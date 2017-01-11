@@ -16,7 +16,7 @@ $sql = "UPDATE Stock SET `quantite`=$quantite WHERE `produit`='".$produit."'";
 
 
 if(mysqli_query($conn,$sql)) {
-  echo "Mise à jour des données réussie dans 'Stock'";
+  echo "Mise à jour des données réussie";
 } else {
   echo "Erreur dans la mise à jour des données: " . mysqli_error($conn);
 }

@@ -14,7 +14,8 @@ if ($conn->connect_error) {
 }
 
 //requête pour la journée:
-$req_jour = "SELECT date_vente, produit FROM Ventes WHERE date(date_vente) = '".$date."'";
+$req_jour = "SELECT DATE(date_vente), produit FROM Ventes ";
+//WHERE date(date_vente) = '".$date."'
 $result = $conn->query($req_jour);
 
 //chaine '$outp' qui va servir de réponse en JSON:
@@ -22,7 +23,7 @@ $outp = "";
 //tranforme chaque ligne '$rs' en JSON:
 while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     if ($outp != "") {$outp .= ",";} //ajoute une virgule entre chaque élément, sauf le premier
-    $outp .= '{"date_vente":"'  . $rs["date_vente"] . '",';
+    $outp .= '{"date_vente":"'  . $rs["DATE(date_vente)"] . '",';
     $outp .= '"produit":"'. $rs["produit"]     . '"}';
 }
 $outp ='{"resultat":['.$outp.']}';

@@ -9,9 +9,11 @@ if ($conn->connect_error) {
 }
 
 $produit = mysqli_real_escape_string($conn,$data->produit);
-$vendeur = mysqli_real_escape_string($conn,$data->vendeur);
 
-$sql = "INSERT INTO `Ventes`(`vendeur`, `produit`) VALUES ('alex', '".$produit."')";
+$sql = "DELETE FROM Ventes
+        WHERE `produit`= '".$produit."'
+        ORDER BY id_vente DESC
+        LIMIT 1";
 
 
 if(mysqli_query($conn,$sql)) {
