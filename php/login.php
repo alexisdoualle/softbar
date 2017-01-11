@@ -9,7 +9,8 @@
       $utilisateur = $_POST['utilisateur'];
       $password = $_POST['password'];
       //connexion à la bdd:
-      $conn = new mysqli("localhost", "root", "root", "villalemons");
+      include 'connexion_db.php';
+
       //protège contre les injections SQL:
       $utilisateur = stripslashes($utilisateur);
       $password = stripslashes($password);
@@ -23,7 +24,8 @@
         $_SESSION['login_user']=$utilisateur; // initialise la session
         header("location: application.php");
       } else {
-        $error = "utilisateur inconnu";
+        $_SESSION['login_user']="error";
+        $error = "Mauvaise combinaison utilisateur/mot de passe";
       }
     } //fin de else
   } // fin de if (isset($_POST['submit']))

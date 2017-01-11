@@ -15,6 +15,7 @@ app.controller('mainCtrl', function($scope, $http) {
   $http.get("php/caisse.php")
   .success(function(data, status, headers, config) {
       $scope.stock = data.resultat;
+      $scope.caisse = data.caisse;
     });
 
 
@@ -33,7 +34,8 @@ app.controller('mainCtrl', function($scope, $http) {
     $http.post("php/insert.php", {
       "produit":item.produit,
       "quantite":item.quantite,
-      "prix":item.prix
+      "prix":item.prix,
+      //"caisse":caisse
       })
       .success(function(data,status,headers,config){
         console.log("Data Sent Successfully");
@@ -104,4 +106,9 @@ app.controller('mainCtrl', function($scope, $http) {
 
 
 
+});
+app.filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
 });

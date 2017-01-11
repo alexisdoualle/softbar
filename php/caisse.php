@@ -1,19 +1,16 @@
 <?php
 //affiche les erreurs php eventuelles:
 ini_set('display_errors',1);
+include 'connexion_db.php';
 
 //header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-//connexion:
-$conn = new mysqli("localhost", "root", "root", "villalemons");
-if ($conn->connect_error) {
-    die("Connection échouée: " . $conn->connect_error);
-}
-
 //requête:
 $sql = "SELECT produit, quantite, prix FROM Stock";
+$sql2 = "SELECT fond_de_caisse, date_heure FROM Caisse ORDER BY date_heure DESC LIMIT 1";
 $result = $conn->query($sql);
+$result2 = $conn->query($sql2);
 
 //chaine '$outp' qui va servir de réponse en JSON:
 $outp = "";
@@ -24,7 +21,9 @@ while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     $outp .= '"quantite":'   . $rs["quantite"]        . ',';
     $outp .= '"prix":'. $rs["prix"]     . '}';
 }
-$outp ='{"resultat":['.$outp.']}';
+$rs2 = $result2->fetch_array(MYSQLI_ASSOC);
+$outp ='{"resultat":['.$outp.'],"caisse":'.$rs2["fond_de_caisse"].'}';
+//
 
 mysqli_close($conn); //ferme la connexion
 

@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <title>Login Softbar</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <h1>Connexion</h1>

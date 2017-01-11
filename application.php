@@ -1,6 +1,10 @@
 <?php
   ini_set('display_errors',1);
   include('php/session.php');
+  if (empty($util) || ($util == "error")) {
+    header("Location: index.php");
+    exit;
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,16 +44,34 @@
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
           </tr>
-        </table>
-        <table>
           <tr>
-            <td>
-              <span>Utilisateur: <span style=""><?php echo $util ?></span> </span>
-              <span>Se <a href="php/logout.php">déconnecter</a></span>
-            </td>
-
+            <td style="background-color:#EEE"></td>
+            <td style="background-color:#EEE"></td>
+            <td style="background-color:#EEE"></td>
+            <td style="background-color:#EEE"></td>
+            <td colspan="2">Fond de caisse:</td>
+            <td>{{caisse | number:2}} €</td>
+          </tr>
+          <tr>
+            <td>Utilisateur: </td>
+            <td style="text-align:center; font-weight:bold"><span style=""><?php echo $util ?></span></td>
+            <td><span>Se <a href="php/logout.php">déconnecter</a></span></td>
           </tr>
         </table>
+
+        <table class="historique">
+          <tr>
+            <td style="background-color:#EEE" colspan="7" ><h3>Historique des ventes</h3></td>
+          </tr>
+          <tr>
+
+          </tr>
+          <tr ng-repeat="vente in ventes | reverse | filter:{'date_vente':today} ">
+            <td colspan="7">{{vente.date_vente}} : {{vente.produit}}</td>
+          </tr>
+        </table>
+
+
 
     </div>
   </body>
