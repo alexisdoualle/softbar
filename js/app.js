@@ -126,6 +126,15 @@ app.controller('mainCtrl', function($scope, $http) {
     }
 
   }
+  $scope.edit = false;
+  $scope.showEdit = function(item) {
+    if ($scope.edit) {
+      updateCaisse(item);
+      $scope.edit = false;
+    } else {
+      $scope.edit = true;
+    }
+  }
 
 });
 app.filter('reverse', function() {

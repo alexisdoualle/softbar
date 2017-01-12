@@ -21,7 +21,7 @@
       <h1>Caisse</h1>
         <table>
           <tr>
-            <th>Produit</th>
+            <th class="produit">Produit</th>
             <th></th>
             <th>Stock</th>
             <th>Prix</th>
@@ -31,10 +31,13 @@
           </tr>
           <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js -->
           <tr ng-repeat="item in stock">
-            <td>{{item.produit}}</td>
+            <td ng-show="!edit" ng-click="showEdit(item)">{{item.produit}}</td>
+            <td ng-show="edit" style="width:20%">
+              <input type="text" ng-model="item.produit" class="quantite3">
+              <input type="button" value="OK" ng-click="showEdit(item)"></td>
             <td style="item-align:center">
               <input type="button" ng-click="vendre(item)" value="VENDRE" class="buttonVendre">
-              <input type="button" ng-click="annulerVendre(item)" value="Annuler" class="buttonAnnuler">
+              <input type="button" ng-click="annulerVendre(item)" value="X" class="buttonAnnuler">
             </td>
             <td class="stock">
               <input type="number" ng-model="item.quantite" class="quantite">

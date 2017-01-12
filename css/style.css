@@ -30,7 +30,7 @@ h3 {
   width: 80%;
   height: 1200px;
   align-items: center;
-  background-color: #EEE;
+  background-color: #FFF;
 }
 
 .stock {
@@ -41,6 +41,10 @@ h3 {
 .utilisateur {
   background-color: black;
   color: white;
+}
+
+.produit {
+  width: 10%;
 }
 
 .quantite {
@@ -60,21 +64,31 @@ h3 {
   text-align: center;
   border-style: hidden;
 }
+.quantite3 {
+  padding: 0px;
+  font-size: 15px;
+  width: 70%;
+  height: 100%;
+  text-align: center;
+  border-style: hidden;
+}
 
 .buttonVendre {
+  width: 70%;
   display: inline-block;
   margin: auto;
   border: none;
-  padding: 10px;
+  padding: 5px;
   background-color: lightgreen;
   border: solid 1px;
 }
 
 .buttonAnnuler {
+  max-width: 40px;
   display: inline-block;
   margin: auto;
   border: none;
-  padding: 10px;
+  padding: 5px;
   background-color: lightcoral;
   border: solid 1px;
 }

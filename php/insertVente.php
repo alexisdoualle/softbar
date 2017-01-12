@@ -3,10 +3,7 @@ ini_set('display_errors',1);
 $data = json_decode(file_get_contents("php://input"));
 
 //connexion à la db:
-$conn = new mysqli("localhost", "root", "root", "villalemons");
-if ($conn->connect_error) {
-    die("Connection échouée: " . $conn->connect_error);
-}
+include 'connexion_db.php';
 
 $produit = mysqli_real_escape_string($conn,$data->produit);
 $vendeur = mysqli_real_escape_string($conn,$data->vendeur);

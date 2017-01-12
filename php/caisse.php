@@ -1,6 +1,6 @@
 <?php
 //affiche les erreurs php eventuelles:
-ini_set('display_errors',1);
+//ini_set('display_errors',1);
 include 'connexion_db.php';
 
 //header("Access-Control-Allow-Origin: *");
