@@ -29,6 +29,7 @@
             <th>Mois</th>
             <th>Total</th>
           </tr>
+          <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js -->
           <tr ng-repeat="item in stock">
             <td>{{item.produit}}</td>
             <td style="item-align:center">
@@ -42,31 +43,41 @@
             <td>{{item.prix | number:2}} €</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
-            <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} ).length*item.prix }} €</td>
           </tr>
           <tr>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
-            <td colspan="2">Fond de caisse:</td>
-            <td>{{caisse | number:2}} €</td>
+            <td colspan="2">Caisse:</td>
+            <td ng-show="!showCaisse">{{caisse | number:2}} €</td>
+            <td ng-show="showCaisse" class="caisse"><input type="number" ng-model="caisse" class="quantite2"></td>
           </tr>
           <tr>
             <td>Utilisateur: </td>
             <td style="text-align:center; font-weight:bold"><span style=""><?php echo $util ?></span></td>
             <td><span>Se <a href="php/logout.php">déconnecter</a></span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td ng-show="!showCaisse"><input type="button" name="" value="Changer" class="buttonValider2" ng-click="showCaisseUpdate()"></td>
+            <td ng-show="showCaisse"><input type="button" name="" value="Valider" class="buttonVendre" ng-click="showCaisseUpdate()"></td>
+
           </tr>
         </table>
 
         <table class="historique">
+
           <tr>
-            <td style="background-color:#EEE" colspan="7" ><h3>Historique des ventes</h3></td>
+            <td style="background-color:#EEE" colspan="7" >
+              <h3>Historique des ventes <input type="checkbox" ng-model="histo"></h3>
+            </td>
           </tr>
           <tr>
 
           </tr>
-          <tr ng-repeat="vente in ventes | reverse | filter:{'date_vente':today} ">
+          <tr ng-show="histo" ng-repeat="vente in ventes | reverse | filter:{'date_vente':today} ">
             <td colspan="7">{{vente.date_vente}} : {{vente.produit}}</td>
           </tr>
         </table>

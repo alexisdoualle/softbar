@@ -35,12 +35,22 @@ app.controller('mainCtrl', function($scope, $http) {
       "produit":item.produit,
       "quantite":item.quantite,
       "prix":item.prix,
-      //"caisse":caisse
+      "caisse":$scope.caisse
       })
       .success(function(data,status,headers,config){
         console.log("Data Sent Successfully");
       });
   }
+
+  updateCaisse = function() {
+    $http.post("php/insert.php", {
+      "caisse":$scope.caisse
+      })
+      .success(function(data,status,headers,config){
+        console.log("Data Sent Successfully");
+      });
+  }
+
   updateDBVentes = function(item) {
     $http.post("php/insertVente.php", {
       "produit":item.produit,
@@ -82,6 +92,7 @@ app.controller('mainCtrl', function($scope, $http) {
     if(item.quantite > 0) {
       item.quantite--;
       $scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
+      $scope.caisse += item.prix;
       updateDB(item);
       updateDBVentes(item);
 
@@ -97,6 +108,7 @@ app.controller('mainCtrl', function($scope, $http) {
     //vérifie qu'il y ait au moins une vente correspondant à l'item:
     if (indexItem != -1) {
       deleteItem(item); // appelle le formulaire et met à jour la bdd
+      $scope.caisse -= item.prix;
       item.quantite++;
       updateDB(item);
       getVentes(); //rafraichit $scope.ventes
@@ -104,11 +116,21 @@ app.controller('mainCtrl', function($scope, $http) {
 
   } //fin de annulerVendre()
 
+  $scope.showCaisse = false;
+  $scope.showCaisseUpdate = function(item) {
+    if ($scope.showCaisse) {
+      updateCaisse();
+      $scope.showCaisse = false;
+    } else {
+        $scope.showCaisse = true;
+    }
 
+  }
 
 });
 app.filter('reverse', function() {
   return function(items) {
+    if (!items || !items.length) { return; }
     return items.slice().reverse();
   };
 });
