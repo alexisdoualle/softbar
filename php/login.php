@@ -9,7 +9,7 @@
       $utilisateur = $_POST['utilisateur'];
       $password = $_POST['password'];
       //connexion à la bdd:
-      include 'connexion_db.php';
+      include 'connexiondb.php';
 
       //protège contre les injections SQL:
       $utilisateur = stripslashes($utilisateur);

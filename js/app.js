@@ -1,7 +1,7 @@
 app = angular.module('softbar', []);
 
 
-app.controller('mainCtrl', function($scope, $http) {
+app.controller('mainCtrl', function($scope, $http, $window) {
 
   $scope.ojd = new Date();
   var month = $scope.ojd.getUTCMonth() + 1; //months from 1-12
@@ -107,6 +107,7 @@ app.controller('mainCtrl', function($scope, $http) {
     indexItem = $scope.ventes.findIndex(trouverItem); //trouve l'index de l'item si il existe (!= -1)
     //vérifie qu'il y ait au moins une vente correspondant à l'item:
     if (indexItem != -1) {
+      $window.alert("vous avez supprimé la dernière vente de: " + item.produit);
       deleteItem(item); // appelle le formulaire et met à jour la bdd
       $scope.caisse -= item.prix;
       item.quantite++;

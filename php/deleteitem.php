@@ -3,7 +3,7 @@
 $data = json_decode(file_get_contents("php://input"));
 
 //connexion à la db:
-include 'connexion_db.php';
+include 'connexiondb.php';
 
 $produit = mysqli_real_escape_string($conn,$data->produit);
 

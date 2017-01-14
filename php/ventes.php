@@ -8,7 +8,7 @@ header("Content-Type: application/json; charset=UTF-8");
 $date = date("Y-m-d"); // aujourd'hui
 
 //connexion:
-include 'connexion_db.php';
+include 'connexiondb.php';
 
 //requête pour la journée:
 $req_jour = "SELECT DATE(date_vente), produit FROM Ventes ";

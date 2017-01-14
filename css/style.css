@@ -28,6 +28,8 @@ h3 {
   padding-bottom: 6px;
   padding-top: 1px;
   width: 80%;
+  display: block;
+  max-width: 1000px;
   height: 1200px;
   align-items: center;
   background-color: #FFF;

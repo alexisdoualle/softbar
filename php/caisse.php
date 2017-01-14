@@ -1,7 +1,7 @@
 <?php
 //affiche les erreurs php eventuelles:
 //ini_set('display_errors',1);
-include 'connexion_db.php';
+include 'connexiondb.php';
 
 //header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

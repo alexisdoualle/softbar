@@ -31,10 +31,10 @@
           </tr>
           <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js -->
           <tr ng-repeat="item in stock">
-            <td ng-show="!edit" ng-click="showEdit(item)">{{item.produit}}</td>
-            <td ng-show="edit" style="width:20%">
+            <td ng-show="!edit">{{item.produit}}</td>
+            <td ng-show="(edit)" style="width:20%">
               <input type="text" ng-model="item.produit" class="quantite3">
-              <input type="button" value="OK" ng-click="showEdit(item)"></td>
+            </td>
             <td style="item-align:center">
               <input type="button" ng-click="vendre(item)" value="VENDRE" class="buttonVendre">
               <input type="button" ng-click="annulerVendre(item)" value="X" class="buttonAnnuler">
@@ -49,7 +49,10 @@
             <td>{{(ventes | filter:{'produit':item.produit} ).length*item.prix }} €</td>
           </tr>
           <tr>
-            <td style="background-color:#EEE"></td>
+            <td style="background-color:#EEE">
+              <input type="button" ng-click="showEdit()" value="Editer">
+              <input type="button" ng-click="showEdit()" value="OK">
+            </td>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
@@ -66,7 +69,6 @@
             <td></td>
             <td ng-show="!showCaisse"><input type="button" name="" value="Changer" class="buttonValider2" ng-click="showCaisseUpdate()"></td>
             <td ng-show="showCaisse"><input type="button" name="" value="Valider" class="buttonVendre" ng-click="showCaisseUpdate()"></td>
-
           </tr>
         </table>
 
