@@ -36,7 +36,15 @@ h3 {
 }
 
 .stock {
-  width: 30%;
+  width: 20%;
+  min-width: 180px;
+}
+.vendre {
+  width: 25%;
+  min-width: 195px;
+}
+.prix {
+  min-width: 50px;
 }
 
 
@@ -86,7 +94,45 @@ h3 {
 }
 
 .buttonAnnuler {
-  max-width: 40px;
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 5px;
+  background-color: lightcoral;
+  border: solid 1px;
+}
+
+.buttonOption {
+  max-width: 60px;
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 5px;
+  background-color: lightgrey;
+  border: solid 1px;
+}
+
+.buttonFacturer {
+  max-width: 60px;
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 5px;
+  background-color: azure;
+  border: solid 1px;
+}
+
+.buttonOffrir {
+  max-width: 60px;
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 5px;
+  background-color: turquoise;
+  border: solid 1px;
+}
+
+.buttonAnnuler2 {
   display: inline-block;
   margin: auto;
   border: none;
@@ -111,7 +157,7 @@ h3 {
   display: inline-block;
   border: solid 1px;
   background-color: lightblue;
-  width: 50%;
+  width: auto;
 }
 .buttonValider2 {
   padding: 5px;

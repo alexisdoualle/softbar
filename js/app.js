@@ -31,23 +31,23 @@ app.controller('mainCtrl', function($scope, $http, $window) {
 
   //met à jour la base de données avec $scope.vendre
   updateDB = function(item) {
-    $http.post("php/insert.php", {
+    $http.post("php/majstock.php", {
       "produit":item.produit,
       "quantite":item.quantite,
       "prix":item.prix,
       "caisse":$scope.caisse
       })
       .success(function(data,status,headers,config){
-        console.log("Data Sent Successfully");
+        console.log("Data Sent");
       });
   }
 
   updateCaisse = function() {
-    $http.post("php/insert.php", {
+    $http.post("php/majstock.php", {
       "caisse":$scope.caisse
       })
       .success(function(data,status,headers,config){
-        console.log("Data Sent Successfully");
+        console.log("Data Sent");
       });
   }
 
@@ -57,7 +57,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       "vendeur":'alex'
     })
     .success(function(data, status, headers, config) {
-      console.log("Data Sent Successfully");
+      console.log("Data Sent");
     });
   }
 
@@ -66,7 +66,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       "produit":item.produit
     })
     .success(function(data, status, headers, config) {
-      console.log("Deleted Successfully");
+      console.log("Deleted command sent");
     });
   }
 
@@ -117,6 +117,24 @@ app.controller('mainCtrl', function($scope, $http, $window) {
 
   } //fin de annulerVendre()
 
+  $scope.offrir = function(item) {
+    if(item.quantite > 0) {
+      item.quantite--;
+      //$scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
+      updateDB(item);
+      //updateDBVentes(item);
+    }
+  }
+
+  $scope.facturer = function(item) {
+    if(item.quantite > 0) {
+      item.quantite--;
+      //$scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
+      updateDB(item);
+      //updateDBVentes(item);
+    }
+  }
+
   $scope.showCaisse = false;
   $scope.showCaisseUpdate = function(item) {
     if ($scope.showCaisse) {
@@ -130,12 +148,22 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   $scope.edit = false;
   $scope.showEdit = function(item) {
     if ($scope.edit) {
-      updateCaisse(item);
+      //updateCaisse(item);
       $scope.edit = false;
     } else {
       $scope.edit = true;
     }
   }
+
+  $scope.option = false;
+  $scope.showOption = function() {
+    if ($scope.option) {
+      $scope.option = false;
+    } else {
+      $scope.option = true;
+    }
+  }
+
 
 });
 app.filter('reverse', function() {

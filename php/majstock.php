@@ -10,7 +10,7 @@ $quantite = mysqli_real_escape_string($conn,$data->quantite);
 $prix = mysqli_real_escape_string($conn,$data->prix);
 $caisse = mysqli_real_escape_string($conn,$data->caisse);
 
-$sql = "UPDATE Stock SET `quantite`=$quantite `produit`=$produit WHERE `produit`='".$produit."'";
+$sql = "UPDATE Stock SET `quantite`=$quantite WHERE `produit`='".$produit."'";
 $sql2 = "UPDATE Caisse SET `fond_de_caisse`=$caisse";
 
 if(mysqli_query($conn,$sql)) {
@@ -26,5 +26,4 @@ if(mysqli_query($conn,$sql2)) {
 
 
 mysqli_close($conn);
-
 ?>

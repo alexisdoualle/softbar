@@ -1,10 +1,9 @@
 <?php
-  ini_set('display_errors',1);
-  include('php/session.php');
-  if (empty($util) || ($util == "error")) {
-    header("Location: index.php");
-    exit;
-  }
+include('php/session.php');
+if (empty($util) || ($util == "error")) {
+  header("Location: index.php");
+  exit;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,28 +30,28 @@
           </tr>
           <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js -->
           <tr ng-repeat="item in stock">
-            <td ng-show="!edit">{{item.produit}}</td>
-            <td ng-show="(edit)" style="width:20%">
-              <input type="text" ng-model="item.produit" class="quantite3">
+            <td ng-click="showEdit()">{{item.produit}}</td>
+            <td ng-show="!edit" style="item-align:center" class="vendre">
+              <input ng-show="!option" type="button" ng-click="vendre(item)" value="VENDRE" class="buttonVendre">
+              <input ng-show="option" type="button" ng-click="annulerVendre(item)" value="Annuler" title="Annuler vente" class="buttonAnnuler">
+              <input ng-show="option" type="button" ng-click="offrir(item)" value="Offrir" title="Offrir" class="buttonOffrir">
+              <input ng-show="option" type="button" ng-click="facturer(item)" value="Facturer" title="Facturer" class="buttonFacturer">
+              <input type="button" value="..." ng-click="showOption()" class="buttonOption">
             </td>
-            <td style="item-align:center">
-              <input type="button" ng-click="vendre(item)" value="VENDRE" class="buttonVendre">
-              <input type="button" ng-click="annulerVendre(item)" value="X" class="buttonAnnuler">
+            <td ng-show="edit">
+              <input type="button" name="" value="Supprimer" class="buttonAnnuler2">
             </td>
             <td class="stock">
               <input type="number" ng-model="item.quantite" class="quantite">
               <input type="button" name="" value="mettre à jour" ng-click="set(item)" class="buttonValider">
             </td>
-            <td>{{item.prix | number:2}} €</td>
+            <td class="prix">{{item.prix | number:2}} €</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
-            <td>{{(ventes | filter:{'produit':item.produit} ).length*item.prix }} €</td>
+            <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
           </tr>
           <tr>
-            <td style="background-color:#EEE">
-              <input type="button" ng-click="showEdit()" value="Editer">
-              <input type="button" ng-click="showEdit()" value="OK">
-            </td>
+            <td style="background-color:#EEE"><input type="button" name="" value="Editer" ng-click="showEdit()"></td>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
@@ -82,7 +81,7 @@
           <tr>
 
           </tr>
-          <tr ng-show="histo" ng-repeat="vente in ventes | reverse | filter:{'date_vente':today} ">
+          <tr ng-show="histo" ng-repeat="vente in ventes | reverse | limitTo: 20 ">
             <td colspan="7">{{vente.date_vente}} : {{vente.produit}}</td>
           </tr>
         </table>
