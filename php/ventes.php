@@ -1,8 +1,4 @@
 <?php
-//affiche les erreurs php eventuelles (à n'utiliser que pour développer)
-//ini_set('display_errors',1);
-
-//header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 $date = date("Y-m-d"); // aujourd'hui

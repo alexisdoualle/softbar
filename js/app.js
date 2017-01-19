@@ -60,6 +60,25 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       console.log("Data Sent");
     });
   }
+  updateDBOffres = function(item) {
+    $http.post("php/insertOffert.php", {
+      "produit":item.produit,
+      "vendeur":'alex'
+    })
+    .success(function(data, status, headers, config) {
+      console.log("Data Sent");
+    });
+  }
+  updateDBFactures = function(item) {
+    $http.post("php/insertFacturer.php", {
+      "produit":item.produit,
+      "vendeur":'alex'
+    })
+    .success(function(data, status, headers, config) {
+      console.log("Data Sent");
+    });
+  }
+
 
   deleteItem = function(item) {
     $http.post("php/deleteitem.php", {
@@ -122,7 +141,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       item.quantite--;
       //$scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
       updateDB(item);
-      //updateDBVentes(item);
+      updateDBOffres(item);
     }
   }
 
@@ -131,7 +150,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       item.quantite--;
       //$scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
       updateDB(item);
-      //updateDBVentes(item);
+      updateDBFactures(item);
     }
   }
 

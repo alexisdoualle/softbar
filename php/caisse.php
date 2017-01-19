@@ -1,9 +1,6 @@
 <?php
-//affiche les erreurs php eventuelles:
-//ini_set('display_errors',1);
 include 'connexiondb.php';
 
-//header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 //requête:
@@ -23,10 +20,8 @@ while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
 }
 $rs2 = $result2->fetch_array(MYSQLI_ASSOC);
 $outp ='{"resultat":['.$outp.'],"caisse":'.$rs2["fond_de_caisse"].'}';
-//
 
 mysqli_close($conn); //ferme la connexion
 
-echo($outp);//retourne la requête (sous format JSON)
-
+echo($outp);//renvoie la requête (sous format JSON)
 ?>

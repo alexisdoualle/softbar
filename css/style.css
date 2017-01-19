@@ -83,7 +83,7 @@ h3 {
   border-style: hidden;
 }
 
-.buttonVendre {
+.bouttonVendre {
   width: 70%;
   display: inline-block;
   margin: auto;
@@ -92,8 +92,9 @@ h3 {
   background-color: lightgreen;
   border: solid 1px;
 }
+.bouttonVendre:hover {background-color: limegreen}
 
-.buttonAnnuler {
+.bouttonAnnuler {
   display: inline-block;
   margin: auto;
   border: none;
@@ -101,9 +102,11 @@ h3 {
   background-color: lightcoral;
   border: solid 1px;
 }
+.bouttonAnnuler:hover {background-color: indianred}
 
-.buttonOption {
+.bouttonOption {
   max-width: 60px;
+  width: 30px;
   display: inline-block;
   margin: auto;
   border: none;
@@ -111,8 +114,9 @@ h3 {
   background-color: lightgrey;
   border: solid 1px;
 }
+.bouttonOption:hover {background-color: darkgrey}
 
-.buttonFacturer {
+.bouttonFacturer {
   max-width: 60px;
   display: inline-block;
   margin: auto;
@@ -121,8 +125,9 @@ h3 {
   background-color: azure;
   border: solid 1px;
 }
+.bouttonFacturer:hover {background-color: lightblue}
 
-.buttonOffrir {
+.bouttonOffrir {
   max-width: 60px;
   display: inline-block;
   margin: auto;
@@ -131,27 +136,9 @@ h3 {
   background-color: turquoise;
   border: solid 1px;
 }
+.bouttonOffrir:hover {background-color: darkturquoise}
 
-.buttonAnnuler2 {
-  display: inline-block;
-  margin: auto;
-  border: none;
-  padding: 5px;
-  background-color: lightcoral;
-  border: solid 1px;
-}
-
-.button2 {
-  padding: 0px;
-  font-size: 15px;
-  display: inline-block;
-  border: none;
-  background-color: #FFF;
-  width: 15%;
-  height: 80%;
-}
-
-.buttonValider {
+.bouttonValider {
   padding: 5px;
   margin-left: 11px;
   display: inline-block;
@@ -159,15 +146,7 @@ h3 {
   background-color: lightblue;
   width: auto;
 }
-.buttonValider2 {
-  padding: 5px;
-  margin-left: 0px;
-  display: inline-block;
-  border: solid 1px;
-  background-color: lightblue;
-  width: 100%;
-
-}
+.bouttonValider:hover {background-color: skyblue}
 
 span {
   padding: 10px;
@@ -175,9 +154,8 @@ span {
 
 table {
   font-family: arial, sans-serif;
-  border-spacing: 10px;
+  border-spacing: 8px;
   width: 100%;
-
 }
 
 th {
@@ -191,13 +169,13 @@ th {
 td {
   border: 0px solid #DDD;
   text-align: left;
-  padding: 8px;
+  padding: 4px 8px 4px 8px;
 }
 
 tr:nth-child(even) {
-  background-color: #DDD;
+  background-color: #EEE;
 }
 
 tr:nth-child(odd) {
-  background-color: #CCC;
+  background-color: #DDD;
 }

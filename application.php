@@ -30,28 +30,25 @@ if (empty($util) || ($util == "error")) {
           </tr>
           <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js -->
           <tr ng-repeat="item in stock">
-            <td ng-click="showEdit()">{{item.produit}}</td>
-            <td ng-show="!edit" style="item-align:center" class="vendre">
-              <input ng-show="!option" type="button" ng-click="vendre(item)" value="VENDRE" class="buttonVendre">
-              <input ng-show="option" type="button" ng-click="annulerVendre(item)" value="Annuler" title="Annuler vente" class="buttonAnnuler">
-              <input ng-show="option" type="button" ng-click="offrir(item)" value="Offrir" title="Offrir" class="buttonOffrir">
-              <input ng-show="option" type="button" ng-click="facturer(item)" value="Facturer" title="Facturer" class="buttonFacturer">
-              <input type="button" value="..." ng-click="showOption()" class="buttonOption">
-            </td>
-            <td ng-show="edit">
-              <input type="button" name="" value="Supprimer" class="buttonAnnuler2">
+            <td class="produit">{{item.produit}}</td>
+            <td style="item-align:center" class="vendre">
+              <input ng-show="!option" type="button" ng-click="vendre(item)" value="VENDRE" class="bouttonVendre">
+              <input ng-show="option" type="button" ng-click="annulerVendre(item)" value="Annuler" title="Annuler vente" class="bouttonAnnuler">
+              <input ng-show="option" type="button" ng-click="offrir(item)" value="Offrir" title="Offrir" class="bouttonOffrir">
+              <input ng-show="option" type="button" ng-click="facturer(item)" value="Facturer" title="Facturer" class="bouttonFacturer">
+              <input type="button" value="..." ng-click="showOption()" class="bouttonOption">
             </td>
             <td class="stock">
               <input type="number" ng-model="item.quantite" class="quantite">
-              <input type="button" name="" value="mettre à jour" ng-click="set(item)" class="buttonValider">
+              <input type="button" name="" value="mettre à jour" ng-click="set(item)" class="bouttonValider">
             </td>
             <td class="prix">{{item.prix | number:2}} €</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
           </tr>
-          <tr>
-            <td style="background-color:#EEE"><input type="button" name="" value="Editer" ng-click="showEdit()"></td>
+          <tr> 
+            <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
@@ -66,9 +63,7 @@ if (empty($util) || ($util == "error")) {
             <td></td>
             <td></td>
             <td></td>
-            <td ng-show="!showCaisse"><input type="button" name="" value="Changer" class="buttonValider2" ng-click="showCaisseUpdate()"></td>
-            <td ng-show="showCaisse"><input type="button" name="" value="Valider" class="buttonVendre" ng-click="showCaisseUpdate()"></td>
-          </tr>
+            </tr>
         </table>
 
         <table class="historique">
