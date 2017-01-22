@@ -2,9 +2,9 @@ app = angular.module('softbar', []);
 
 
 app.controller('mainCtrl', function($scope, $http, $window) {
-
+  // optient la date et la met au bon format AAAA-MM-JJ:
   $scope.ojd = new Date();
-  var month = $scope.ojd.getUTCMonth() + 1; //months from 1-12
+  var month = $scope.ojd.getUTCMonth() + 1; //mois de 1 à 12
   var day = $scope.ojd.getUTCDate();
   var year = $scope.ojd.getUTCFullYear();
 
@@ -153,7 +153,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       updateDBFactures(item);
     }
   }
-
+/*
   $scope.showCaisse = false;
   $scope.showCaisseUpdate = function(item) {
     if ($scope.showCaisse) {
@@ -163,7 +163,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
         $scope.showCaisse = true;
     }
 
-  }
+  } */
   $scope.edit = false;
   $scope.showEdit = function(item) {
     if ($scope.edit) {
@@ -182,6 +182,41 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       $scope.option = true;
     }
   }
+  /*     $http.post("php/majstock.php", {
+        "produit":item.produit,
+        "quantite":item.quantite,
+        "prix":item.prix,
+        "caisse":$scope.caisse
+        })
+        .success(function(data,status,headers,config){
+          console.log("Data Sent");
+        });  */
+
+  $scope.ajouterProduit = function(nouveauProduit, nouveauPrix, nouveauStock) {
+    $http.post("php/majproduit.php", {
+      "nouveauProduit":nouveauProduit,
+      "nouveauPrix":nouveauPrix,
+      "nouveauStock":nouveauStock
+    })
+    .success(function(data, status,headers,config){
+      console.log("Data Sent");
+      $window.location.reload();
+    });
+  }
+
+  $scope.supprimerProduit = function(item) {
+    if (confirm("Etes-vous sûr de vouloir supprimer: " + item.produit + "?")) {
+      $http.post("php/supprimerProduit.php", {
+        "produit":item.produit
+      })
+      .success(function(data, status,headers,config){
+        console.log("Data Sent");
+        $window.location.reload();
+      });
+    }
+  }
+
+
 
 
 });

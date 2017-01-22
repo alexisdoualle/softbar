@@ -158,7 +158,23 @@ table {
   width: 100%;
 }
 
-th {
+td {
+  border: 0px solid #DDD;
+  text-align: left;
+  padding: 4px 8px 4px 8px;
+}
+
+.tableOptions tr {
+  background-color: #DDD
+}
+
+.tableCaisse {
+  font-family: arial, sans-serif;
+  border-spacing: 8px;
+  width: 100%;
+}
+
+.tableCaisse th {
   border: 1px solid #000;
   text-align: left;
   padding: 8px;
@@ -166,16 +182,16 @@ th {
   color: #FFF;
 }
 
-td {
+.tableCaisse td {
   border: 0px solid #DDD;
   text-align: left;
   padding: 4px 8px 4px 8px;
 }
 
-tr:nth-child(even) {
+.tableCaisse tr:nth-child(even) {
   background-color: #EEE;
 }
 
-tr:nth-child(odd) {
+.tableCaisse tr:nth-child(odd) {
   background-color: #DDD;
 }

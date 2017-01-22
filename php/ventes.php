@@ -7,7 +7,7 @@ $date = date("Y-m-d"); // aujourd'hui
 include 'connexiondb.php';
 
 //requête pour la journée:
-$req_jour = "SELECT DATE(date_vente), produit FROM Ventes ";
+$req_jour = "SELECT DATE(date_vente), produit, offert, facturer FROM Ventes WHERE offert=0 AND facturer=0 ";
 //WHERE date(date_vente) = '".$date."'
 $result = $conn->query($req_jour);
 
@@ -17,7 +17,7 @@ $outp = "";
 while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     if ($outp != "") {$outp .= ",";} //ajoute une virgule entre chaque élément, sauf le premier
     $outp .= '{"date_vente":"'  . $rs["DATE(date_vente)"] . '",';
-    $outp .= '"produit":"'. $rs["produit"]     . '"}';
+    $outp .= '"produit":"'. $rs["produit"]      .'"}';
 }
 $outp ='{"resultat":['.$outp.']}';
 

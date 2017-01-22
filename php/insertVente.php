@@ -1,5 +1,6 @@
 <?php
 //ini_set('display_errors',1);
+//récupère les données JSON du POST et les met dans $data:
 $data = json_decode(file_get_contents("php://input"));
 
 //connexion à la db:

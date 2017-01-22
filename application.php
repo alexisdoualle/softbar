@@ -8,7 +8,7 @@ if (empty($util) || ($util == "error")) {
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/app.js"></script>
@@ -18,7 +18,7 @@ if (empty($util) || ($util == "error")) {
   <body ng-app="softbar">
     <div class="corps" ng-controller="mainCtrl">
       <h1>Caisse</h1>
-        <table>
+        <table class="tableCaisse">
           <tr>
             <th class="produit">Produit</th>
             <th></th>
@@ -47,29 +47,56 @@ if (empty($util) || ($util == "error")) {
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
           </tr>
-          <tr> 
-            <td style="background-color:#EEE"></td>
-            <td style="background-color:#EEE"></td>
+          <tr>
+            <td style="background-color:#EEE" ng-show="!edit"><input type="button" value="Plus d'options" ng-click="showEdit()" class="bouttonValider"></td>
+            <td style="background-color:#EEE" ng-show="edit"><input type="button" value="Moins d'options" ng-click="showEdit()" class="bouttonAnnuler"></td>
             <td style="background-color:#EEE"></td>
             <td style="background-color:#EEE"></td>
             <td colspan="2">Caisse:</td>
             <td ng-show="!showCaisse">{{caisse | number:2}} €</td>
             <td ng-show="showCaisse" class="caisse"><input type="number" ng-model="caisse" class="quantite2"></td>
           </tr>
+        </table>
+        <span>Utilisateur: </span>
+        <span style=""><?php echo $util ?></span>
+        <span>Se <a href="php/logout.php">déconnecter</a></span>
+        <table ng-show="edit" class="tableOptions">
           <tr>
-            <td>Utilisateur: </td>
-            <td style="text-align:center; font-weight:bold"><span style=""><?php echo $util ?></span></td>
-            <td><span>Se <a href="php/logout.php">déconnecter</a></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>
+            <td>
+              Ajouter un produit:
+              <input type="text" placeholder="Nom du produit" ng-model="nouveauProduit" required>
+              <input type="number" placeholder="Prix" ng-model="nouveauPrix" required>
+              <input type="number" placeholder="Stock initial" ng-model="nouveauStock" required>
+              <input type="button" value="Ajouter" ng-click="ajouterProduit(nouveauProduit, nouveauPrix, nouveauStock)">
+            </td>
+          </tr>
+          <tr>
+            <td>Supprimer un produit:
+              <select ng-model="produitSupprime" ng-options="item.produit for item in stock">
+              </select>
+              <input type="button" value="Supprimer" ng-click="supprimerProduit(produitSupprime)">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Ajouter une vente:
+              <input type="date" placeholder="AAAA-MM-JJ">
+              <select class="">
+                <option ng-repeat="item in stock" value="">{{item.produit}}</option>
+              </select>
+              <label for="offert">offert</label>
+              <input type="checkbox" name="offert" value="">
+              <label for="facturé">facturé</label>
+              <input type="checkbox" name="facturé" value="">
+              <input type="button" value="Valider">
+            </td>
+          </tr>
         </table>
 
-        <table class="historique">
+        <table style="background-color:#EEE">
 
           <tr>
-            <td style="background-color:#EEE" colspan="7" >
+            <td colspan="7" >
               <h3>Historique des ventes <input type="checkbox" ng-model="histo"></h3>
             </td>
           </tr>

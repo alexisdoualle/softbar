@@ -6,11 +6,9 @@ $data = json_decode(file_get_contents("php://input"));
 include 'connexiondb.php';
 
 $produit = mysqli_real_escape_string($conn,$data->produit);
+$vendeur = mysqli_real_escape_string($conn,$data->vendeur);
 
-$sql = "DELETE FROM Ventes
-        WHERE `produit`= '".$produit."'
-        ORDER BY id_vente DESC
-        LIMIT 1";
+$sql = "INSERT INTO `Ventes`(`vendeur`, `produit`, `offert`) VALUES ('alex', '".$produit."',1)";
 
 
 if(mysqli_query($conn,$sql)) {
