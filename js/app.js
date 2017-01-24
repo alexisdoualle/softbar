@@ -5,18 +5,22 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   // optient la date et la met au bon format AAAA-MM-JJ:
   $scope.ojd = new Date();
   var month = $scope.ojd.getUTCMonth() + 1; //mois de 1 à 12
-  var day = $scope.ojd.getUTCDate();
+  var day = $scope.ojd.getDate();
   var year = $scope.ojd.getUTCFullYear();
 
   $scope.today = year + "-" + (month < 10 ? '0' + month : '' + month) + "-" + (day < 10 ? '0' + day : '' + day);
   $scope.thisMonth = year + "-" + (month < 10 ? '0' + month : '' + month);
 
   //se connecte à la DB pour obtenir les informations de caisse et les mets dans $scope.stock
-  $http.get("php/caisse.php")
-  .success(function(data, status, headers, config) {
-      $scope.stock = data.resultat;
-      $scope.caisse = data.caisse;
-    });
+  getCaisse = function() {
+    $http.get("php/caisse.php")
+    .success(function(data, status, headers, config) {
+        $scope.stock = data.resultat;
+        $scope.caisse = data.caisse;
+      });
+
+  }
+  $scope.getCaisse = getCaisse();
 
 
   // de même pour les ventes:
@@ -31,14 +35,21 @@ app.controller('mainCtrl', function($scope, $http, $window) {
 
   //met à jour la base de données avec $scope.vendre
   updateDB = function(item) {
-    $http.post("php/majstock.php", {
-      "produit":item.produit,
-      "quantite":item.quantite,
-      "prix":item.prix,
-      "caisse":$scope.caisse
+    $http({
+
+          method: "post",
+          url: "php/majstock.php",
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: {
+            "produit":item.produit,
+            "quantite":item.quantite,
+            "prix":item.prix,
+            "caisse":$scope.caisse}
       })
       .success(function(data,status,headers,config){
         console.log("Data Sent");
+      })
+      .error(function (data, status, header, config) {
       });
   }
 
@@ -48,16 +59,21 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       })
       .success(function(data,status,headers,config){
         console.log("Data Sent");
+      })
+      .error(function (data, status, header, config) {
       });
   }
 
-  updateDBVentes = function(item) {
+  updateDBVentes = function(item,dateVente=$scope.today) {
     $http.post("php/insertVente.php", {
       "produit":item.produit,
-      "vendeur":'alex'
+      "vendeur":'admin',
+      "dateVente":dateVente
     })
     .success(function(data, status, headers, config) {
       console.log("Data Sent");
+    })
+    .error(function (data, status, header, config) {
     });
   }
   updateDBOffres = function(item) {
@@ -107,14 +123,13 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     }
   }
   //vendre un item:
-  $scope.vendre = function(item) {
+  $scope.vendre = function(item, date_vente=$scope.today) {
     if(item.quantite > 0) {
       item.quantite--;
       $scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
       $scope.caisse += item.prix;
       updateDB(item);
-      updateDBVentes(item);
-
+      updateDBVentes(item,date_vente);
     }
   } //fin de vendre()
 
@@ -153,17 +168,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       updateDBFactures(item);
     }
   }
-/*
-  $scope.showCaisse = false;
-  $scope.showCaisseUpdate = function(item) {
-    if ($scope.showCaisse) {
-      updateCaisse();
-      $scope.showCaisse = false;
-    } else {
-        $scope.showCaisse = true;
-    }
 
-  } */
   $scope.edit = false;
   $scope.showEdit = function(item) {
     if ($scope.edit) {
@@ -182,15 +187,6 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       $scope.option = true;
     }
   }
-  /*     $http.post("php/majstock.php", {
-        "produit":item.produit,
-        "quantite":item.quantite,
-        "prix":item.prix,
-        "caisse":$scope.caisse
-        })
-        .success(function(data,status,headers,config){
-          console.log("Data Sent");
-        });  */
 
   $scope.ajouterProduit = function(nouveauProduit, nouveauPrix, nouveauStock) {
     $http.post("php/majproduit.php", {
@@ -216,7 +212,16 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     }
   }
 
-
+  $scope.reordonner = function(item, ordre) {
+    $http.post("php/reordonner.php", {
+      "produit":item.produit,
+      "ordre":ordre
+    })
+    .success(function(data, status,headers,config){
+      console.log("Data Sent");
+      $window.location.reload();
+    });
+  }
 
 
 });

@@ -29,7 +29,7 @@ if (empty($util) || ($util == "error")) {
             <th>Total</th>
           </tr>
           <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js -->
-          <tr ng-repeat="item in stock">
+          <tr ng-repeat="item in stock | orderBy:'ordre'">
             <td class="produit">{{item.produit}}</td>
             <td style="item-align:center" class="vendre">
               <input ng-show="!option" type="button" ng-click="vendre(item)" value="VENDRE" class="bouttonVendre">
@@ -80,15 +80,23 @@ if (empty($util) || ($util == "error")) {
           <tr>
             <td>
               Ajouter une vente:
-              <input type="date" placeholder="AAAA-MM-JJ">
-              <select class="">
-                <option ng-repeat="item in stock" value="">{{item.produit}}</option>
+              <input type="text" placeholder="AAAA-MM-JJ" ng-model="dateVente">
+              <select ng-model="produitVente" ng-options="item.produit for item in stock">
               </select>
-              <label for="offert">offert</label>
+        <!--      <label for="offert">offert</label>
               <input type="checkbox" name="offert" value="">
               <label for="facturé">facturé</label>
               <input type="checkbox" name="facturé" value="">
-              <input type="button" value="Valider">
+        -->      <input type="button" value="Valider" ng-click="vendre(produitVente,dateVente)">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Réordonner:
+              <select ng-model="produitOrdre" ng-options="item.produit for item in stock">
+              </select>
+              <input type="number" ng-model="nouvelOrdre" placeholder="nouvelle position">
+              <input type="button" value="Valider" ng-click="reordonner(produitOrdre, nouvelOrdre)">
             </td>
           </tr>
         </table>
