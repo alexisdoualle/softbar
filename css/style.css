@@ -1,0 +1,181 @@
+body {
+  min-height: 1200px;
+}
+
+h1 {
+  margin: 10px;
+  padding: 5px;
+  text-align: center;
+  border: solid 1px #CCC;
+  font-family: arial;
+}
+
+h3 {
+  margin: 10px;
+  padding: 5px;
+  text-align: center;
+  border: solid 1px #CCC;
+  font-family: arial;
+}
+
+.caisse {
+  max-width: 30px;
+}
+
+.corps {
+  margin: auto;
+  margin-top: 50px;
+  padding-bottom: 6px;
+  padding-top: 1px;
+  width: 80%;
+  display: block;
+  max-width: 1000px;
+  height: 1200px;
+  align-items: center;
+  background-color: #FFF;
+}
+
+.stock {
+  width: 20%;
+  min-width: 180px;
+}
+.vendre {
+  width: 25%;
+  min-width: 195px;
+}
+.prix {
+  min-width: 50px;
+}
+
+
+.utilisateur {
+  background-color: black;
+  color: white;
+}
+
+.produit {
+  width: 10%;
+}
+
+.quantite {
+  padding: 3px;
+  font-size: 15px;
+  width: 35%;
+  height: 80%;
+  text-align: center;
+  border-style: hidden;
+}
+
+.quantite2 {
+  padding: 0px;
+  font-size: 15px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border-style: hidden;
+}
+.quantite3 {
+  padding: 0px;
+  font-size: 15px;
+  width: 70%;
+  height: 100%;
+  text-align: center;
+  border-style: hidden;
+}
+
+.bouttonVendre {
+  width: 70%;
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 5px;
+  background-color: lightgreen;
+  border: solid 1px;
+}
+.bouttonVendre:hover {background-color: limegreen}
+
+.bouttonAnnuler {
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 5px;
+  background-color: lightcoral;
+  border: solid 1px;
+}
+.bouttonAnnuler:hover {background-color: indianred}
+
+.bouttonOption {
+  max-width: 60px;
+  width: 30px;
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 5px;
+  background-color: lightgrey;
+  border: solid 1px;
+}
+.bouttonOption:hover {background-color: darkgrey}
+
+.bouttonFacturer {
+  max-width: 60px;
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 5px;
+  background-color: azure;
+  border: solid 1px;
+}
+.bouttonFacturer:hover {background-color: lightblue}
+
+.bouttonOffrir {
+  max-width: 60px;
+  display: inline-block;
+  margin: auto;
+  border: none;
+  padding: 5px;
+  background-color: turquoise;
+  border: solid 1px;
+}
+.bouttonOffrir:hover {background-color: darkturquoise}
+
+.bouttonValider {
+  padding: 5px;
+  margin-left: 11px;
+  display: inline-block;
+  border: solid 1px;
+  background-color: lightblue;
+  width: auto;
+}
+.bouttonValider:hover {background-color: skyblue}
+
+span {
+  padding: 10px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-spacing: 8px;
+  width: 100%;
+}
+
+th {
+  border: 1px solid #000;
+  text-align: left;
+  padding: 8px;
+  background-color: #000;
+  color: #FFF;
+}
+
+td {
+  border: 0px solid #DDD;
+  text-align: left;
+  padding: 4px 8px 4px 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #EEE;
+}
+
+tr:nth-child(odd) {
+  background-color: #DDD;
+}
