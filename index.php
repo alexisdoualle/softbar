@@ -1,5 +1,4 @@
 <?php
-  ini_set('display_errors',1);
   include('php/login.php');
 ?>
 <html>
@@ -10,7 +9,7 @@
   </head>
   <body>
     <h1>Connexion</h1>
-      <div class="login">
+      <div class="corps">
         <form class="" action="" method="post">
           <label for="">Utilisateur: </label>
           <input type="text" name="utilisateur" placeholder="nom d'utilisateur">

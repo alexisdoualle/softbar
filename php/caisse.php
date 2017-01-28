@@ -4,7 +4,7 @@ include 'connexiondb.php';
 header("Content-Type: application/json; charset=UTF-8");
 
 //requête:
-$sql = "SELECT produit, quantite, prix, ordre FROM Stock";
+$sql = "SELECT produit, quantite, prix, ordre FROM Stock WHERE actif=1";
 $sql2 = "SELECT fond_de_caisse, date_heure FROM Caisse ORDER BY date_heure DESC LIMIT 1";
 $result = $conn->query($sql);
 $result2 = $conn->query($sql2);

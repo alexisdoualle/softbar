@@ -6,10 +6,10 @@ $data = json_decode(file_get_contents("php://input"));
 include 'connexiondb.php';
 
 $produit = mysqli_real_escape_string($conn,$data->produit);
-$vendeur = mysqli_real_escape_string($conn,$data->vendeur);
+$nouveauNom = mysqli_real_escape_string($conn,$data->nouveauNom);
 
-$sql = "INSERT INTO `Ventes`(`vendeur`, `produit`, `offert`) VALUES ('alex', '".$produit."',1)";
 
+$sql = "UPDATE Stock SET `produit`='".$nouveauNom."' WHERE `produit`='".$produit."'";
 
 if(mysqli_query($conn,$sql)) {
   echo "Mise à jour des données réussie";
@@ -17,6 +17,6 @@ if(mysqli_query($conn,$sql)) {
   echo "Erreur dans la mise à jour des données: " . mysqli_error($conn);
 }
 
-mysqli_close($conn);
 
+mysqli_close($conn);
 ?>

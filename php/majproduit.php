@@ -9,13 +9,24 @@ $nouveauProduit = mysqli_real_escape_string($conn,$data->nouveauProduit);
 $nouveauPrix = mysqli_real_escape_string($conn,$data->nouveauPrix);
 $nouveauStock = mysqli_real_escape_string($conn,$data->nouveauStock);
 
-$sql = "INSERT INTO `Stock`(`produit`, `prix`, `quantite`) VALUES ('".$nouveauProduit."', ".$nouveauPrix.",".$nouveauStock.")";
-
-
-if(mysqli_query($conn,$sql)) {
-  echo "Mise à jour des données réussie";
+$sql1 = "SELECT produit, quantite, prix, ordre FROM Stock WHERE produit = '".$nouveauProduit."'";
+$result = $conn->query($sql1);
+if ($result->fetch_array(MYSQLI_ASSOC)) {
+  $sql2 = "UPDATE Stock SET `actif` = 1 WHERE `produit`= '".$nouveauProduit."'";
+  if(mysqli_query($conn,$sql2)) {
+    echo "Mise à jour des données réussie";
+  } else {
+    echo "Erreur dans la mise à jour des données: " . mysqli_error($conn);
+  }
 } else {
-  echo "Erreur dans la mise à jour des données: " . mysqli_error($conn);
+  $sql = "INSERT INTO `Stock`(`produit`, `prix`, `quantite`) VALUES ('".$nouveauProduit."', ".$nouveauPrix.",".$nouveauStock.")";
+
+
+  if(mysqli_query($conn,$sql)) {
+    echo "Mise à jour des données réussie";
+  } else {
+    echo "Erreur dans la mise à jour des données: " . mysqli_error($conn);
+  }
 }
 
 mysqli_close($conn);

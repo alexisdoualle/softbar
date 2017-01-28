@@ -7,7 +7,7 @@ include 'connexiondb.php';
 
 $produit = mysqli_real_escape_string($conn,$data->produit);
 
-$sql = "DELETE FROM Stock
+$sql = "UPDATE Stock SET `actif` = 0
         WHERE `produit`= '".$produit."'";
 
 

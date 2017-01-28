@@ -2,6 +2,7 @@ app = angular.module('softbar', []);
 
 
 app.controller('mainCtrl', function($scope, $http, $window) {
+  $scope.histoVentes=true;
   // optient la date et la met au bon format AAAA-MM-JJ:
   $scope.ojd = new Date();
   var month = $scope.ojd.getUTCMonth() + 1; //mois de 1 à 12
@@ -34,9 +35,8 @@ app.controller('mainCtrl', function($scope, $http, $window) {
 
 
   //met à jour la base de données avec $scope.vendre
-  updateDB = function(item) {
+  updateStock = function(item) {
     $http({
-
           method: "post",
           url: "php/majstock.php",
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -52,10 +52,15 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       .error(function (data, status, header, config) {
       });
   }
-
+  //met à jour la caisse:
   updateCaisse = function() {
-    $http.post("php/majstock.php", {
-      "caisse":$scope.caisse
+    $http({
+          method: "post",
+          url: "php/majstock.php",
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: {
+            "caisse":$scope.caisse,
+          }
       })
       .success(function(data,status,headers,config){
         console.log("Data Sent");
@@ -64,72 +69,67 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       });
   }
 
-  updateDBVentes = function(item,dateVente=$scope.today) {
-    $http.post("php/insertVente.php", {
-      "produit":item.produit,
-      "vendeur":'admin',
-      "dateVente":dateVente
-    })
+
+  updateVentes = function(item, offert, facturer, dateVente=$scope.today) {
+    $http({
+          method: "post",
+          url: "php/insertVente.php",
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: {
+            "produit":item.produit,
+            "vendeur":'admin',
+            "dateVente":dateVente,
+            "offert":offert,
+            "facturer":facturer
+          }
+      })
     .success(function(data, status, headers, config) {
       console.log("Data Sent");
     })
     .error(function (data, status, header, config) {
     });
   }
-  updateDBOffres = function(item) {
-    $http.post("php/insertOffert.php", {
-      "produit":item.produit,
-      "vendeur":'alex'
-    })
-    .success(function(data, status, headers, config) {
-      console.log("Data Sent");
-    });
-  }
-  updateDBFactures = function(item) {
-    $http.post("php/insertFacturer.php", {
-      "produit":item.produit,
-      "vendeur":'alex'
-    })
-    .success(function(data, status, headers, config) {
-      console.log("Data Sent");
-    });
-  }
 
 
+  //supprimer une vente
   deleteItem = function(item) {
-    $http.post("php/deleteitem.php", {
-      "produit":item.produit
-    })
+    $http({
+          method: "post",
+          url: "php/deleteitem.php",
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: {
+            "produit":item.produit}
+      })
     .success(function(data, status, headers, config) {
       console.log("Deleted command sent");
     });
   }
 
-  //valide la valeur de stock entrée par l'utilisateur dans le bouton 'set'
+  //valide la valeur de stock entrée par l'utilisateur avec le bouton 'mettre à jour'
   $scope.set = function(item){
-    updateDB(item);
+    updateStock(item);
   }
-  //incrémente la valeur 'stock' d'un item
+  //incrémente la valeur 'quantite' d'un item
   $scope.increment = function(item){
     item.quantite++;
-    updateDB(item);
+    updateStock(item);
   }
-  //décrémente la valeur 'stock' d'un item:
+  //décrémente la valeur 'quantite' d'un item:
   $scope.decrement = function(item){
     //empèche un stock négatif:
     if(item.quantite > 0) {
       item.quantite--;
-      updateDB(item);
+      updateStock(item);
     }
   }
   //vendre un item:
-  $scope.vendre = function(item, date_vente=$scope.today) {
+  $scope.vendre = function(item, offert=0, facturer=0, date_vente=$scope.today) {
     if(item.quantite > 0) {
       item.quantite--;
       $scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
       $scope.caisse += item.prix;
-      updateDB(item);
-      updateDBVentes(item,date_vente);
+      updateStock(item);
+      updateVentes(item,offert,facturer,date_vente);
     }
   } //fin de vendre()
 
@@ -145,40 +145,14 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       deleteItem(item); // appelle le formulaire et met à jour la bdd
       $scope.caisse -= item.prix;
       item.quantite++;
-      updateDB(item);
+      updateStock(item);
       getVentes(); //rafraichit $scope.ventes
     }
 
   } //fin de annulerVendre()
 
-  $scope.offrir = function(item) {
-    if(item.quantite > 0) {
-      item.quantite--;
-      //$scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
-      updateDB(item);
-      updateDBOffres(item);
-    }
-  }
 
-  $scope.facturer = function(item) {
-    if(item.quantite > 0) {
-      item.quantite--;
-      //$scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
-      updateDB(item);
-      updateDBFactures(item);
-    }
-  }
-
-  $scope.edit = false;
-  $scope.showEdit = function(item) {
-    if ($scope.edit) {
-      //updateCaisse(item);
-      $scope.edit = false;
-    } else {
-      $scope.edit = true;
-    }
-  }
-
+  //affiche les options telles que Annnuler, Offrir etc.
   $scope.option = false;
   $scope.showOption = function() {
     if ($scope.option) {
@@ -188,12 +162,27 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     }
   }
 
+  //modifier le montant de la caisse:
+  $scope.editCaisse = false;
+  $scope.modifierCaisse = function() {
+    if ($scope.editCaisse) {
+      updateCaisse();
+      $scope.editCaisse = false;
+    } else {
+      $scope.editCaisse = true;
+    }
+  }
+
   $scope.ajouterProduit = function(nouveauProduit, nouveauPrix, nouveauStock) {
-    $http.post("php/majproduit.php", {
-      "nouveauProduit":nouveauProduit,
-      "nouveauPrix":nouveauPrix,
-      "nouveauStock":nouveauStock
-    })
+    $http({
+          method: "post",
+          url: "php/majproduit.php",
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: {
+            "nouveauProduit":nouveauProduit,
+            "nouveauPrix":nouveauPrix,
+            "nouveauStock":nouveauStock}
+          })
     .success(function(data, status,headers,config){
       console.log("Data Sent");
       $window.location.reload();
@@ -202,9 +191,13 @@ app.controller('mainCtrl', function($scope, $http, $window) {
 
   $scope.supprimerProduit = function(item) {
     if (confirm("Etes-vous sûr de vouloir supprimer: " + item.produit + "?")) {
-      $http.post("php/supprimerProduit.php", {
-        "produit":item.produit
-      })
+      $http({
+            method: "post",
+            url: "php/supprimerProduit.php",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: {
+              "produit":item.produit}
+            })
       .success(function(data, status,headers,config){
         console.log("Data Sent");
         $window.location.reload();
@@ -213,10 +206,29 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   }
 
   $scope.reordonner = function(item, ordre) {
-    $http.post("php/reordonner.php", {
-      "produit":item.produit,
-      "ordre":ordre
-    })
+    $http({
+          method: "post",
+          url: "php/reordonner.php",
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: {
+            "produit":item.produit,
+            "ordre":ordre}
+          })
+    .success(function(data, status,headers,config){
+      console.log("Data Sent");
+      $window.location.reload();
+    });
+  }
+
+  $scope.RenommerProduit = function(item, nouveauNom) {
+    $http({
+          method: "post",
+          url: "php/renommer.php",
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: {
+            "produit":item.produit,
+            "nouveauNom":nouveauNom}
+          })
     .success(function(data, status,headers,config){
       console.log("Data Sent");
       $window.location.reload();
