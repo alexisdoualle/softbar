@@ -119,6 +119,7 @@ if ($util != "admin") {
             </td>
           </tr>
         </table>
+        <div class="" style="min-height:500px">
 
         <table style="background-color:#EEE">
 
@@ -129,22 +130,18 @@ if ($util != "admin") {
           </tr>
           <tr>
             <tr>
-              <form class="" action="index.html" method="post">
-                <input type="radio" ng-model="histoVentes" value="">
-                <input type="radio" ng-model="histoVentes" value="">
-              </form>
-              <td>Ventes<input type="checkbox" ng-model="histoVentes"></td>
-              <td>Mouvements de caisse<input type="checkbox" ng-model="histoCaisse"></td>
+              <td>Ventes<input type="checkbox" ng-model="histoVentes">
+              Mouvements de caisse<input type="checkbox" ng-model="histoCaisse"></td>
             </tr>
           </tr>
           <tr ng-show="histoVentes" ng-repeat="vente in ventes | reverse | limitTo: 20 ">
             <td colspan="7">{{vente.date_vente}} : {{vente.produit}}</td>
           </tr>
-          <tr ng-show="histoCaisse">
-            <td>Historique Caisse</td>
+          <tr ng-show="histoCaisse" ng-repeat="mouvement in mouvements | reverse">
+            <td>{{mouvement.date_mouvement}} : {{mouvement.montant}} €</td>
           </tr>
         </table>
-
+        </div>
     </div>
   </body>
 </html>

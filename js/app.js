@@ -3,7 +3,7 @@ app = angular.module('softbar', []);
 
 app.controller('mainCtrl', function($scope, $http, $window) {
   $scope.utilisateurs = ["admin","stagiaire"];
-  $scope.histoVentes=true;
+  
   // optient la date et la met au bon format AAAA-MM-JJ:
   $scope.ojd = new Date();
   var month = $scope.ojd.getUTCMonth() + 1; //mois de 1 à 12
@@ -19,6 +19,8 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     .success(function(data, status, headers, config) {
         $scope.stock = data.resultat;
         $scope.caisse = data.caisse;
+        $scope.mouvements = data.mouvements;
+        console.log($scope.mouvements);
       });
 
   }
