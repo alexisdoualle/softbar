@@ -97,16 +97,18 @@ if ($util != "admin") {
             </td>
           </tr>
           <tr>
-            <td>
+              <td>
               Ajouter une vente:
               <input type="text" placeholder="AAAA-MM-JJ" ng-model="dateVente">
               <select ng-model="produitVente" ng-options="item.produit for item in stock">
               </select>
+              quantité:
+              <input type="number" placeholder="quantite" ng-model="quantiteVente" style="width:30px">
               <label for="offert">offert</label>
               <input type="checkbox" name="offert" ng-model="offert">
               <label for="facturé">facturé</label>
               <input type="checkbox" name="facturé" ng-model="facturer">
-              <input type="button" value="Valider" ng-click="vendre(produitVente,offert,facturer,dateVente)">
+              <input type="button" value="Valider" ng-click="ajouterVente(produitVente,offert,facturer,dateVente)">
             </td>
           </tr>
           <tr>
@@ -120,27 +122,25 @@ if ($util != "admin") {
           </tr>
         </table>
         <div class="" style="min-height:500px">
-
-        <table style="background-color:#EEE">
-
-          <tr>
-            <td colspan="7" >
-              <h3>Historique</h3>
-            </td>
-          </tr>
-          <tr>
+          <table style="background-color:#EEE">
             <tr>
-              <td>Ventes<input type="checkbox" ng-model="histoVentes">
-              Mouvements de caisse<input type="checkbox" ng-model="histoCaisse"></td>
+              <td colspan="7" >
+                <h3>Historique</h3>
+              </td>
             </tr>
-          </tr>
-          <tr ng-show="histoVentes" ng-repeat="vente in ventes | reverse | limitTo: 20 ">
-            <td colspan="7">{{vente.date_vente}} : {{vente.produit}}</td>
-          </tr>
-          <tr ng-show="histoCaisse" ng-repeat="mouvement in mouvements | reverse">
-            <td>{{mouvement.date_mouvement}} : {{mouvement.montant}} €</td>
-          </tr>
-        </table>
+            <tr>
+              <tr>
+                <td>Ventes<input type="checkbox" ng-model="histoVentes">
+                Mouvements de caisse<input type="checkbox" ng-model="histoCaisse"></td>
+              </tr>
+            </tr>
+            <tr ng-show="histoVentes" ng-repeat="vente in ventes | reverse | limitTo: 20 ">
+              <td colspan="7">{{vente.date_vente}} : {{vente.produit}}</td>
+            </tr>
+            <tr ng-show="histoCaisse" ng-repeat="mouvement in mouvements | reverse">
+              <td>{{mouvement.date_mouvement}}, montant: {{mouvement.montant}} €</td>
+            </tr>
+          </table>
         </div>
     </div>
   </body>
