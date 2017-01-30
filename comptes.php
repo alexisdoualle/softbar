@@ -29,7 +29,8 @@ if ($util != "admin") {
           Nouveau mot de passe:
           <input type="password" name="newpassw"><br>
           <input type="submit" name="submit" value="Valider"><br>
-          <span style="color:red"><?php echo $error ?></span><br>
+          <span style="color:red"><?php echo $error ?></span>
+          <span style="color:blue"><?php echo $message ?></span><br>
           <a href="admin.php">revenir</a>
         </form>
       </div>

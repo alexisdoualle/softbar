@@ -2,6 +2,7 @@ app = angular.module('softbar', []);
 
 
 app.controller('mainCtrl', function($scope, $http, $window) {
+  $scope.utilisateurs = ["admin","stagiaire"];
   $scope.histoVentes=true;
   // optient la date et la met au bon format AAAA-MM-JJ:
   $scope.ojd = new Date();
@@ -220,37 +221,21 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     });
   }
 
-  $scope.RenommerProduit = function(item, nouveauNom) {
+  $scope.RenommerProduit = function(item, nouveauNom, nouveauPrix) {
     $http({
           method: "post",
           url: "php/renommer.php",
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           data: {
             "produit":item.produit,
-            "nouveauNom":nouveauNom}
+            "nouveauNom":nouveauNom,
+            "nouveauPrix":nouveauPrix}
           })
     .success(function(data, status,headers,config){
       console.log("requête envoyée");
       $window.location.reload();
     });
   }
-
-  $scope.utilisateurs = ["admin","stagiaire"];
-  $scope.majMdp = function(utilmdp, oldpassw, newpassw) {
-    $http({
-          method: "post",
-          url: "php/majmdp.php",
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          data: {
-            "utilmdp":utilmdp,
-            "oldpassw":oldpassw,
-            "newpassw":newpassw}
-          })
-    .success(function(data, status,headers,config){
-      console.log("requête envoyée");
-    });
-  }
-
 
 });
 app.filter('reverse', function() {
