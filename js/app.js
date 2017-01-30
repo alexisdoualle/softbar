@@ -47,7 +47,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
             "caisse":$scope.caisse}
       })
       .success(function(data,status,headers,config){
-        console.log("Data Sent");
+        console.log("requête envoyée");
       })
       .error(function (data, status, header, config) {
       });
@@ -63,7 +63,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
           }
       })
       .success(function(data,status,headers,config){
-        console.log("Data Sent");
+        console.log("requête envoyée");
       })
       .error(function (data, status, header, config) {
       });
@@ -84,7 +84,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
           }
       })
     .success(function(data, status, headers, config) {
-      console.log("Data Sent");
+      console.log("requête envoyée");
     })
     .error(function (data, status, header, config) {
     });
@@ -184,7 +184,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
             "nouveauStock":nouveauStock}
           })
     .success(function(data, status,headers,config){
-      console.log("Data Sent");
+      console.log("requête envoyée");
       $window.location.reload();
     });
   }
@@ -199,7 +199,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
               "produit":item.produit}
             })
       .success(function(data, status,headers,config){
-        console.log("Data Sent");
+        console.log("requête envoyée");
         $window.location.reload();
       });
     }
@@ -215,7 +215,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
             "ordre":ordre}
           })
     .success(function(data, status,headers,config){
-      console.log("Data Sent");
+      console.log("requête envoyée");
       $window.location.reload();
     });
   }
@@ -230,8 +230,24 @@ app.controller('mainCtrl', function($scope, $http, $window) {
             "nouveauNom":nouveauNom}
           })
     .success(function(data, status,headers,config){
-      console.log("Data Sent");
+      console.log("requête envoyée");
       $window.location.reload();
+    });
+  }
+
+  $scope.utilisateurs = ["admin","stagiaire"];
+  $scope.majMdp = function(utilmdp, oldpassw, newpassw) {
+    $http({
+          method: "post",
+          url: "php/majmdp.php",
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: {
+            "utilmdp":utilmdp,
+            "oldpassw":oldpassw,
+            "newpassw":newpassw}
+          })
+    .success(function(data, status,headers,config){
+      console.log("requête envoyée");
     });
   }
 
