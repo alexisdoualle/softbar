@@ -4,7 +4,7 @@ include 'connexiondb.php';
 header("Content-Type: application/json; charset=UTF-8");
 
 //requête:
-$sql = "SELECT produit, quantite, prix, ordre FROM Stock WHERE actif=1";
+$sql = "SELECT produit, quantite, prix, ordre, couleur FROM Stock WHERE actif=1";
 $sql2 = "SELECT fond_de_caisse, date_heure FROM Caisse ORDER BY date_heure DESC LIMIT 1";
 $sql3 = "SELECT nouveau_montant, date_mouvement FROM Mouvements LIMIT 50";
 $result = $conn->query($sql);
@@ -18,8 +18,9 @@ while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     if ($outp != "") {$outp .= ",";} //ajoute une virgule entre chaque élément, sauf le premier
     $outp .= '{"produit":"'  . $rs["produit"]  . '",';
     $outp .= '"quantite":'   . $rs["quantite"] . ',';
-    $outp .= '"prix":'. $rs["prix"]            . ',';
-    $outp .= '"ordre":'   . $rs["ordre"] . '}';
+    $outp .= '"prix":'       . $rs["prix"]     . ',';
+    $outp .= '"ordre":'      . $rs["ordre"]    . ',';
+    $outp .= '"couleur":"'    . $rs["couleur"] . '"}';
 }
 $rs2 = $result2->fetch_array(MYSQLI_ASSOC);
 

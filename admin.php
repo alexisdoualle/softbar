@@ -29,7 +29,7 @@ if ($util != "admin") {
           </tr>
           <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js -->
           <tr ng-repeat="item in stock | orderBy:'ordre'">
-            <td class="produit" ng-attr-title="rang: {{item.ordre}}">{{item.produit}}</td>
+            <td class="produit" ng-attr-title="rang: {{item.ordre}}" ng-style="{'background-color':(item.couleur)}" ng-click="changerCouleur(item)">{{item.produit}}</td>
             <td style="item-align:center" class="vendre">
               <input ng-show="!option" type="button" ng-click="vendre(item, 0, 0)" value="VENDRE" class="bouttonVendre">
               <input ng-show="option" type="button" ng-click="annulerVendre(item)" value="Annuler vente" title="Annuler la dernière vente" class="bouttonAnnuler">
@@ -81,11 +81,11 @@ if ($util != "admin") {
           </tr>
           <tr>
             <td>
-              Renommer un produit:
+              Modifier un produit:
               <select ng-model="produitARenommer" ng-options="item.produit for item in stock">
               </select>
               <input type="text" placeholder="Nouveau nom" ng-model="nouveauNom" required>
-              <input type="number" placeholder="Prix" ng-model="nouveauPrix2" required>
+              <input type="number" placeholder="Prix" ng-model="nouveauPrix2" required style="width:40px">
               <input type="button" value="Renommer" ng-click="RenommerProduit(produitARenommer, nouveauNom, nouveauPrix2)">
             </td>
           </tr>

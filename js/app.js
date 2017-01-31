@@ -21,10 +21,8 @@ app.controller('mainCtrl', function($scope, $http, $window) {
         $scope.caisse = data.caisse;
         $scope.mouvements = data.mouvements;
       });
-
   }
   $scope.getCaisse = getCaisse();
-
 
   // de même pour les ventes:
   getVentes = function() {
@@ -54,6 +52,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       .error(function (data, status, header, config) {
       });
   }
+
   //met à jour la caisse:
   updateCaisse = function() {
     $http({
@@ -70,7 +69,6 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       .error(function (data, status, header, config) {
       });
   }
-
 
   updateVentes = function(item, offert, facturer, dateVente=$scope.today) {
     $http({
@@ -242,6 +240,60 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     .success(function(data, status,headers,config){
       console.log("requête envoyée");
       $window.location.reload();
+    });
+  }
+
+  $scope.changerCouleur = function(item) {
+    console.log(item.couleur);
+    var c1 = "DarkTurquoise";
+    var c2 = "DarkSalmon";
+    var c3 = "Gold";
+    var c4 = "LightGreen";
+    var c5 = "LightBlue";
+    var c6 = "Tomato";
+    var c7 = "LightYellow";
+    var c8 = "LightPink";
+    var c9 = "SandyBrown";
+    switch (item.couleur) {
+      case c1:
+        item.couleur = c2;
+        break;
+      case c2:
+        item.couleur = c3;
+        break;
+      case c3:
+        item.couleur = c4;
+        break;
+      case c4:
+        item.couleur = c5;
+        break;
+      case c5:
+        item.couleur = c6;
+        break;
+      case c6:
+        item.couleur = c7;
+        break;
+      case c7:
+        item.couleur = c8;
+        break;
+      case c8:
+        item.couleur = c9;
+        break;
+      case c9:
+        item.couleur = c1;
+        break;
+    }
+    $http({
+          method: "post",
+          url: "php/changercouleur.php",
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: {
+            "produit":item.produit,
+            "nouvelleCouleur":item.couleur}
+          })
+    .success(function(data, status,headers,config){
+      console.log("requête envoyée");
+      //$window.location.reload();
     });
   }
 
