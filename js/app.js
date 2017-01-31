@@ -244,7 +244,6 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   }
 
   $scope.changerCouleur = function(item) {
-    console.log(item.couleur);
     var c1 = "DarkTurquoise";
     var c2 = "DarkSalmon";
     var c3 = "Gold";
@@ -293,7 +292,6 @@ app.controller('mainCtrl', function($scope, $http, $window) {
           })
     .success(function(data, status,headers,config){
       console.log("requête envoyée");
-      //$window.location.reload();
     });
   }
 

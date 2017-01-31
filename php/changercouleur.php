@@ -10,7 +10,6 @@ $nouvelleCouleur = mysqli_real_escape_string($conn,$data->nouvelleCouleur);
 
 
 $sql = "UPDATE Stock SET `couleur`='".$nouvelleCouleur."' WHERE `produit`='".$produit."'";
-print_r($sql);
 if(mysqli_query($conn,$sql)) {
   echo "Mise à jour des données réussie";
 } else {

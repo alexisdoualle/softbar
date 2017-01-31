@@ -9,7 +9,7 @@ $produit = mysqli_real_escape_string($conn,$data->produit);
 $ordre = mysqli_real_escape_string($conn,$data->ordre);
 
 
-$sql = "UPDATE Stock SET `ordre`=$ordre WHERE `produit`='".$produit."'";
+$sql = "UPDATE Stock SET `ordre`=".$ordre." WHERE `produit`='".$produit."'";
 
 if(mysqli_query($conn,$sql)) {
   echo "Mise à jour des données réussie";
