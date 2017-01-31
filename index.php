@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <h1>Connexion</h1>
+    <h1>Bienvenue</h1>
       <div class="corps">
         <form class="" action="" method="post">
           <label for="">Utilisateur: </label>
