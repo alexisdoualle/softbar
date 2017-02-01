@@ -150,13 +150,16 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     indexItem = $scope.ventes.findIndex(trouverItem); //trouve l'index de l'item si il existe (!= -1)
     //vérifie qu'il y ait au moins une vente correspondant à l'item:
     if (indexItem != -1) {
+      console.log($scope.ventes[indexItem]);
       $window.alert("vous avez supprimé la dernière vente de: " + item.produit);
+      if ($scope.ventes[indexItem].facturer==0 && $scope.ventes[indexItem].offert==0) {
+        $scope.caisse -= item.prix;
+      }
       deleteItem(item); // appelle le formulaire et met à jour la bdd
-      $scope.caisse -= item.prix;
       item.quantite++;
       updateStock(item);
       getVentes(); //rafraichit $scope.ventes
-    }
+    } //else: aucune vente correspondante trouvée
 
   } //fin de annulerVendre()
 

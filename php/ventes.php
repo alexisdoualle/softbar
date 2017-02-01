@@ -17,7 +17,9 @@ $outp = "";
 while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     if ($outp != "") {$outp .= ",";} //ajoute une virgule entre chaque élément, sauf le premier
     $outp .= '{"date_vente":"'  . $rs["DATE(date_vente)"] . '",';
-    $outp .= '"produit":"'. $rs["produit"]      .'"}';
+    $outp .= '"produit":"'. $rs["produit"]                . '",';
+    $outp .= '"offert":'. $rs["offert"]                . ',';
+    $outp .= '"facturer":'. $rs["facturer"]  .'}';
 }
 $outp ='{"resultat":['.$outp.']}';
 
