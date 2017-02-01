@@ -134,7 +134,7 @@ if ($util != "admin") {
                 Mouvements de caisse<input type="checkbox" ng-model="histoCaisse"></td>
               </tr>
             </tr>
-            <tr ng-show="histoVentes" ng-repeat="vente in ventes | reverse | limitTo: 20 ">
+            <tr ng-show="histoVentes" ng-repeat="vente in ventes | reverse | limitTo: 100 ">
               <td colspan="7">{{vente.date_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
             <tr ng-show="histoCaisse" ng-repeat="mouvement in mouvements | reverse">
