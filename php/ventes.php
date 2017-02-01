@@ -7,7 +7,7 @@ $date = date("Y-m-d"); // aujourd'hui
 include 'connexiondb.php';
 
 //requête pour la journée:
-$req_jour = "SELECT DATE(date_vente), produit, offert, facturer FROM Ventes WHERE offert=0 AND facturer=0 ";
+$req_jour = "SELECT DATE(date_vente), produit, offert, facturer FROM Ventes WHERE offert=0";
 //WHERE date(date_vente) = '".$date."'
 $result = $conn->query($req_jour);
 

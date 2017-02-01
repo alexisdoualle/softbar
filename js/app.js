@@ -127,7 +127,9 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     if(item.quantite > 0) {
       item.quantite--;
       $scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
-      $scope.caisse += item.prix;
+      if(facturer==0 && offert==0) {
+        $scope.caisse += item.prix;
+      }
       updateStock(item);
       updateVentes(item,offert,facturer,date_vente);
     }
