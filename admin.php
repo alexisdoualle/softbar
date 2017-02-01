@@ -135,7 +135,7 @@ if ($util != "admin") {
               </tr>
             </tr>
             <tr ng-show="histoVentes" ng-repeat="vente in ventes | reverse | limitTo: 20 ">
-              <td colspan="7">{{vente.date_vente}} : {{vente.produit}}</td>
+              <td colspan="7">{{vente.date_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
             <tr ng-show="histoCaisse" ng-repeat="mouvement in mouvements | reverse">
               <td>{{mouvement.date_mouvement}}, montant: {{mouvement.montant}} €</td>

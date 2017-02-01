@@ -126,7 +126,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   $scope.vendre = function(item, offert=0, facturer=0, date_vente=$scope.today) {
     if(item.quantite > 0) {
       item.quantite--;
-      $scope.ventes.push({"date_vente":$scope.today,"produit":item.produit});
+      $scope.ventes.push({"date_vente":$scope.today,"produit":item.produit,"offert":offert,"facturer":facturer});
       if(facturer==0 && offert==0) {
         $scope.caisse += item.prix;
       }
