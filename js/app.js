@@ -108,6 +108,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   //valide la valeur de stock entrée par l'utilisateur avec le bouton 'mettre à jour'
   $scope.set = function(item){
     updateStock(item);
+    window.location.reload();
   }
   //incrémente la valeur 'quantite' d'un item
   $scope.increment = function(item){
