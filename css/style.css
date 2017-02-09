@@ -10,6 +10,11 @@ h1 {
   font-family: arial;
 }
 
+h2  {
+  font-family: arial;
+  color: #333;
+}
+
 h3 {
   margin: 10px;
   padding: 5px;
@@ -17,6 +22,40 @@ h3 {
   border: solid 1px #CCC;
   font-family: arial;
 }
+
+.login {
+position: relative;
+z-index: 1;
+max-width: 360px;
+margin: 0 auto 100px;
+padding: 45px;
+text-align: center;
+box-shadow: 0 0 20px 0 #BBB, 0 5px 5px 0 #999;
+}
+
+.login input {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 1px;
+	padding:15px;
+	margin:0 0 15px;
+  font-size: 14px;
+ }
+
+ .login .btn_submit {
+   text-transform: uppercase;
+   background: #4CAF50;
+   color: #FFF;
+   font-size: 14px;
+   -webkit-transition: all 0.3 ease;
+   transition: all 0.3 ease;
+   cursor: pointer;
+ }
+
+ .login .btn_submit:hover, .login .btn_submit:active,.login .btn_submit:focus {
+   background: #43A047;
+ }
 
 .caisse {
   max-width: 30px;
