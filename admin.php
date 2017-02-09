@@ -133,7 +133,7 @@ if ($util != "admin") {
               <tr>
                 <td>
                   Ventes <input type="radio" ng-model="historique" value="ventesGroupees">
-                  Ventes Récentes<input type="radio" ng-model="historique" value="histoVentes">
+            <!--  Ventes Récentes<input type="radio" ng-model="historique" value="histoVentes"> -->
                   Mouvements de caisse<input type="radio" ng-model="historique" value="histoCaisse">
                   Ventes Détaillées <input type="radio" ng-model="historique" value="histoTotal">
                 </td>
@@ -145,11 +145,11 @@ if ($util != "admin") {
                   <li ng-repeat="(k2,v2) in value | groupBy: 'produit'">{{k2}} : {{(value | filter:k2).length}}</li>
                 </ul>
               </td>
-            </tr>
-            <tr ng-show="historique == 'histoVentes'" ng-repeat="vente in ventes | reverse | limitTo: 50 ">
+      <!--  </tr>
+              <tr ng-show="historique == 'histoVentes'" ng-repeat="vente in ventes | reverse | limitTo: 50 ">
               <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
-            <tr ng-show="historique == 'histoCaisse'" ng-repeat="mouvement in mouvements | reverse">
+      -->    <tr ng-show="historique == 'histoCaisse'" ng-repeat="mouvement in mouvements | reverse">
               <td>{{mouvement.date_mouvement}}, montant: {{mouvement.montant}} €</td>
             </tr>
             <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse">

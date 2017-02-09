@@ -96,7 +96,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   deleteItem = function(item) {
     $http({
           method: "post",
-          url: "php/deleteitem.php",
+          url: "php/annulervente.php",
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           data: {
             "produit":item.produit}

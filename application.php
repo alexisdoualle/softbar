@@ -12,7 +12,8 @@ if (empty($util) || ($util == "error")) {
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="node_modules/angular-filter/dist/angular-filter.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/app.js"></script>
 
