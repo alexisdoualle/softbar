@@ -53,11 +53,13 @@ if (empty($util) || ($util == "error")) {
             <td colspan="2">Caisse:</td>
             <td colspan="2">{{caisse | number:2}} €</td>
           </tr>
-        </table>
-        <span>Utilisateur: </span>
-        <span style=""><?php echo $util ?></span>
-        <span>Se <a href="php/logout.php">déconnecter</a></span>
+          <tr>
+            <td>Utilisateur: </td>
+            <td style=""><?php echo $util ?></td>
+            <td>Se <a href="php/logout.php">déconnecter</a></td>
+          </tr>
 
+        </table>
 
         <table style="background-color:#EEE">
 

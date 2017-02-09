@@ -130,15 +130,21 @@ if ($util != "admin") {
             </tr>
             <tr>
               <tr>
-                <td>Ventes<input type="checkbox" ng-model="histoVentes">
-                Mouvements de caisse<input type="checkbox" ng-model="histoCaisse"></td>
+                <td>
+                  Ventes récentes<input type="radio" ng-model="historique" value="histoVentes">
+                  Mouvements de caisse<input type="radio" ng-model="historique" value="histoCaisse">
+                  Toutes les ventes <input type="radio" ng-model="historique" value="histoTotal">
+                </td>
               </tr>
             </tr>
-            <tr ng-show="histoVentes" ng-repeat="vente in ventes | reverse | limitTo: 100 ">
+            <tr ng-show="historique == 'histoVentes'" ng-repeat="vente in ventes | reverse | limitTo: 100 ">
               <td colspan="7">{{vente.date_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
-            <tr ng-show="histoCaisse" ng-repeat="mouvement in mouvements | reverse">
+            <tr ng-show="historique == 'histoCaisse'" ng-repeat="mouvement in mouvements | reverse">
               <td>{{mouvement.date_mouvement}}, montant: {{mouvement.montant}} €</td>
+            </tr>
+            <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse">
+              <td colspan="7">{{vente.date_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
           </table>
         </div>
