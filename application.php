@@ -33,7 +33,7 @@ if (empty($util) || ($util == "error")) {
           </tr>
           <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js -->
           <tr ng-repeat="item in stock | orderBy:'ordre'">
-            <td class="produit" ng-attr-title="{{item.ordre}}">{{item.produit}}</td>
+            <td class="produit" ng-attr-title="{{item.ordre}}" ng-style="{'background-color':(item.couleur)}">{{item.produit}}</td>
             <td style="item-align:center" class="vendre">
               <input type="button" ng-click="vendre(item, 0, 0)" value="VENDRE" class="bouttonVendre">
             </td>
