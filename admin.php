@@ -11,6 +11,7 @@ if ($util != "admin") {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/angular.min.js"></script>
+    <script src="node_modules/angular-filter/dist/angular-filter.min.js"></script>
     <script src="js/app.js"></script>
     <title>Application</title>
   </head>
@@ -43,8 +44,8 @@ if ($util != "admin") {
               <input type="button" name="" value="mettre à jour" ng-click="set(item)" class="bouttonValider">
             </td>
             <td class="prix">{{item.prix | number:2}} €</td>
-            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
-            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'heure_vente':today} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'heure_vente':thisMonth} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
           </tr>
           <tr>
@@ -76,7 +77,7 @@ if ($util != "admin") {
               <input type="text" placeholder="Nom du produit" ng-model="nouveauProduit" required>
               <input type="number" placeholder="Prix" ng-model="nouveauPrix" required>
               <input type="number" placeholder="Stock initial" ng-model="nouveauStock" required>
-              <input type="button" value="Ajouter" ng-click="ajouterProduit(nouveauProduit, nouveauPrix, nouveauStock)">
+              <input type="button" value="Ajouter" ng-click="ajouterProduit(nouveauProduit, nouveauPrix, nouveauStock)" class="btn">
             </td>
           </tr>
           <tr>
@@ -86,14 +87,14 @@ if ($util != "admin") {
               </select>
               <input type="text" placeholder="Nouveau nom" ng-model="nouveauNom" required>
               <input type="number" placeholder="Prix" ng-model="nouveauPrix2" required style="width:40px">
-              <input type="button" value="Renommer" ng-click="RenommerProduit(produitARenommer, nouveauNom, nouveauPrix2)">
+              <input type="button" value="Renommer" ng-click="RenommerProduit(produitARenommer, nouveauNom, nouveauPrix2)" class="btn">
             </td>
           </tr>
           <tr>
             <td>Supprimer un produit:
               <select ng-model="produitSupprime" ng-options="item.produit for item in stock">
               </select>
-              <input type="button" value="Supprimer" ng-click="supprimerProduit(produitSupprime)">
+              <input type="button" value="Supprimer" ng-click="supprimerProduit(produitSupprime)" class="btn">
             </td>
           </tr>
           <tr>
@@ -108,7 +109,7 @@ if ($util != "admin") {
               <input type="checkbox" name="offert" ng-model="offert">
               <label for="facturé">facturé</label>
               <input type="checkbox" name="facturé" ng-model="facturer">
-              <input type="button" value="Valider" ng-click="ajouterVente(produitVente,offert,facturer,dateVente)">
+              <input type="button" value="Valider" ng-click="ajouterVente(produitVente,offert,facturer,dateVente)" class="btn">
             </td>
           </tr>
           <tr>
@@ -117,7 +118,7 @@ if ($util != "admin") {
               <select ng-model="produitOrdre" ng-options="item.produit for item in stock">
               </select>
               <input type="number" ng-model="nouvelOrdre" placeholder="nouvelle position">
-              <input type="button" value="Valider" ng-click="reordonner(produitOrdre, nouvelOrdre)">
+              <input type="button" value="Valider" ng-click="reordonner(produitOrdre, nouvelOrdre)" class="btn">
             </td>
           </tr>
         </table>
@@ -131,20 +132,28 @@ if ($util != "admin") {
             <tr>
               <tr>
                 <td>
-                  Ventes récentes<input type="radio" ng-model="historique" value="histoVentes">
+                  Ventes <input type="radio" ng-model="historique" value="ventesGroupees">
+                  Ventes Récentes<input type="radio" ng-model="historique" value="histoVentes">
                   Mouvements de caisse<input type="radio" ng-model="historique" value="histoCaisse">
-                  Toutes les ventes <input type="radio" ng-model="historique" value="histoTotal">
+                  Ventes Détaillées <input type="radio" ng-model="historique" value="histoTotal">
                 </td>
               </tr>
             </tr>
-            <tr ng-show="historique == 'histoVentes'" ng-repeat="vente in ventes | reverse | limitTo: 100 ">
-              <td colspan="7">{{vente.date_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
+            <tr ng-show="historique == 'ventesGroupees'" ng-repeat="(key, value) in ventes | reverse | groupBy: 'date_vente' ">
+              <td colspan="7"> {{key}} :
+                <ul>
+                  <li ng-repeat="(k2,v2) in value | groupBy: 'produit'">{{k2}} : {{(value | filter:k2).length}}</li>
+                </ul>
+              </td>
+            </tr>
+            <tr ng-show="historique == 'histoVentes'" ng-repeat="vente in ventes | reverse | limitTo: 50 ">
+              <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
             <tr ng-show="historique == 'histoCaisse'" ng-repeat="mouvement in mouvements | reverse">
               <td>{{mouvement.date_mouvement}}, montant: {{mouvement.montant}} €</td>
             </tr>
             <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse">
-              <td colspan="7">{{vente.date_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
+              <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
           </table>
         </div>

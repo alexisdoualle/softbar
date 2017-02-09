@@ -1,7 +1,8 @@
-app = angular.module('softbar', []);
+app = angular.module('softbar', ['angular.filter']);
 
 
 app.controller('mainCtrl', function($scope, $http, $window) {
+  $scope.historique = "ventesGroupees";
   $scope.utilisateurs = ["admin","stagiaire"];
   // optient la date et la met au bon format AAAA-MM-JJ:
   $scope.ojd = new Date();
@@ -11,6 +12,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
 
   $scope.today = year + "-" + (month < 10 ? '0' + month : '' + month) + "-" + (day < 10 ? '0' + day : '' + day);
   $scope.thisMonth = year + "-" + (month < 10 ? '0' + month : '' + month);
+
 
   //se connecte à la DB pour obtenir les informations de caisse et les mets dans $scope.stock
   getCaisse = function() {

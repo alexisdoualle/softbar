@@ -189,6 +189,20 @@ box-shadow: 0 0 20px 0 #BBB, 0 5px 5px 0 #999;
 }
 .bouttonValider:hover {background-color: skyblue}
 
+.tableOptions input {
+  border-style: hidden;
+  padding: 4px;
+}
+.tableOptions select {
+  border-style: none;
+  padding: 5px;
+}
+
+.tableOptions .btn {
+  background-color: lightblue;
+  border: solid 1px;
+}
+
 span {
   padding: 10px;
 }
