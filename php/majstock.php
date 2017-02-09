@@ -1,4 +1,5 @@
 <?php
+//met à jour la caisse et le stock
 //récupère les données JSON du POST et les met dans $data:
 $data = json_decode(file_get_contents("php://input"));
 

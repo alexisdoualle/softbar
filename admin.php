@@ -44,15 +44,15 @@ if ($util != "admin") {
               <input type="button" name="" value="mettre à jour" ng-click="set(item)" class="bouttonValider">
             </td>
             <td class="prix">{{item.prix | number:2}} €</td>
-            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'heure_vente':today} ).length }}</td>
-            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'heure_vente':thisMonth} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
           </tr>
           <tr>
+            <td>Utilisateur: </td>
+            <td><?php echo $util ?></td>
+            <td><a href="comptes.php">Gérer comptes</a></td>
             <td></td>
-            <td></td>
-            <td style="background-color:#EEE"></td>
-            <td style="background-color:#EEE"></td>
             <td colspan="1">Caisse:</td>
             <td colspan="2" ng-show="!editCaisse">
               {{caisse | number:2}} €
@@ -61,13 +61,11 @@ if ($util != "admin") {
               <input type="number" ng-model="caisse" class="quantite" style="width:60px">
             </td>
             <tr>
-              <td>Utilisateur: </td>
-              <td><?php echo $util ?></td>
-              <td>Se <a href="php/logout.php">déconnecter</a></td>
-              <td colspan="2"><a href="comptes.php">Gérer comptes</a></td>
-              <td colspan="1"></td>
-              <td ng-show="!editCaisse"><input type="button" value="Modifier" ng-click="modifierCaisse()"></td>
+              <td colspan="2">Se <a href="php/logout.php">déconnecter</a></td>
+              <td colspan="2"></td>
+              <td ng-show="!editCaisse"><input type="button" value="Recompter" ng-click="modifierCaisse()"></td>
               <td ng-show="editCaisse"><input type="button" value="Valider" ng-click="modifierCaisse()"></td>
+              <td colspan="2"><input type="button" value="Retrait" ng-click="retrait()"></td>
             </tr>
         </table>
         <table class="tableOptions">
@@ -123,23 +121,20 @@ if ($util != "admin") {
           </tr>
         </table>
         <div class="" style="min-height:500px">
-          <table style="background-color:#EEE">
+          <table class="tableHisto">
             <tr>
               <td colspan="7" >
                 <h3>Historique</h3>
               </td>
             </tr>
             <tr>
-              <tr>
-                <td>
-                  Ventes <input type="radio" ng-model="historique" value="ventesGroupees">
+                <td>Ventes <input type="radio" ng-model="historique" value="ventesGroupees"></td>
             <!--  Ventes Récentes<input type="radio" ng-model="historique" value="histoVentes"> -->
-                  Mouvements de caisse<input type="radio" ng-model="historique" value="histoCaisse">
-                  Ventes Détaillées <input type="radio" ng-model="historique" value="histoTotal">
-                </td>
-              </tr>
+                <td>Mouvements de caisse<input type="radio" ng-model="historique" value="histoCaisse"></td>
+                <td>Ventes Détaillées <input type="radio" ng-model="historique" value="histoTotal"></td>
+                <td colspan="4"></td>
             </tr>
-            <tr ng-show="historique == 'ventesGroupees'" ng-repeat="(key, value) in ventes | reverse | groupBy: 'date_vente' ">
+            <tr ng-show="historique == 'ventesGroupees'" ng-repeat="(key, value) in ventes | reverse | limitTo:100 | groupBy: 'date_vente'  ">
               <td colspan="7"> {{key}} :
                 <ul>
                   <li ng-repeat="(k2,v2) in value | groupBy: 'produit'">{{k2}} : {{(value | filter:k2).length}}</li>
@@ -150,9 +145,9 @@ if ($util != "admin") {
               <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
       -->    <tr ng-show="historique == 'histoCaisse'" ng-repeat="mouvement in mouvements | reverse">
-              <td>{{mouvement.date_mouvement}}, montant: {{mouvement.montant}} €</td>
+              <td colspan="7">{{mouvement.date_mouvement}}, montant: {{mouvement.montant}} €</td>
             </tr>
-            <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse">
+            <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse | limitTo:100">
               <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
           </table>

@@ -103,13 +103,19 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       })
     .success(function(data, status, headers, config) {
       console.log("Deleted command sent");
+      //window.location.reload();
     });
+  }
+
+  $scope.retrait = function() {
+    var montantRetrait = parseInt(prompt('Entrez le montant du retrait'));
+    console.log(montantRetrait);
   }
 
   //valide la valeur de stock entrée par l'utilisateur avec le bouton 'mettre à jour'
   $scope.set = function(item){
     updateStock(item);
-    window.location.reload();
+    //window.location.reload();
   }
   //incrémente la valeur 'quantite' d'un item
   $scope.increment = function(item){
@@ -132,15 +138,18 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       if(facturer==0 && offert==0) {
         $scope.caisse += item.prix;
       }
+      console.log("vente effectuée");
       updateStock(item);
       updateVentes(item,offert,facturer,date_vente);
+    } else {
+      alert("Le stock est insuffisant. Augmentez-le avant de vendre");
     }
   } //fin de vendre()
 
   $scope.quantiteVente = 1;
-  $scope.ajouterVente = function(item, offert=0, facturer=0, date_vente=$scope.today) {
+  $scope.ajouterVente = function(prodVente, offert=0, facturer=0, date_vente=$scope.today) {
     for (var i = 0; i < $scope.quantiteVente; i++) {
-      $scope.vendre(item, offert, facturer, date_vente);
+      $scope.vendre(prodVente, offert, facturer, date_vente);
     }
   }
 
@@ -154,6 +163,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     if (indexItem != -1) {
       console.log($scope.ventes[indexItem]);
       $window.alert("vous avez supprimé la dernière vente de: " + item.produit);
+      //ne met à jour la caisse que si la vente n'est ni offerte ni facturée:
       if ($scope.ventes[indexItem].facturer==0 && $scope.ventes[indexItem].offert==0) {
         $scope.caisse -= item.prix;
       }
@@ -186,7 +196,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       $scope.editCaisse = true;
     }
   }
-
+  //Ajoute un produit, ou le rend actif si il était inactif (à partir de majproduit.php)
   $scope.ajouterProduit = function(nouveauProduit, nouveauPrix, nouveauStock) {
     $http({
           method: "post",
@@ -202,7 +212,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       $window.location.reload();
     });
   }
-
+  //Ne supprime pas le produit de la base de donnée, mais le rends inactif.
   $scope.supprimerProduit = function(item) {
     if (confirm("Etes-vous sûr de vouloir supprimer: " + item.produit + "?")) {
       $http({
@@ -218,7 +228,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       });
     }
   }
-
+  //donne une position à un produit, le n°1 sera tout en haut et ainsi de suite
   $scope.reordonner = function(item, ordre) {
     $http({
           method: "post",

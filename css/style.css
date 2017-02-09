@@ -74,6 +74,17 @@ box-shadow: 0 0 20px 0 #BBB, 0 5px 5px 0 #999;
   background-color: #FFF;
 }
 
+.tableOptions {
+  min-width:830px;
+  padding:0px
+}
+
+.tableHisto {
+  background-color:#EEE;
+  min-width:830px;
+  padding:0px
+}
+
 .stock {
   width: 20%;
   min-width: 180px;
