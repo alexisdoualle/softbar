@@ -19,7 +19,7 @@
       $requete = $conn->query($sql);
       //vérifie l'utilisateur:
       if (mysqli_num_rows($requete) == 1) {
-        $sql2 = "UPDATE Utilisateurs SET `mdp`=".$newpassw." WHERE `username` = '".$utilisateur."'";
+        $sql2 = "UPDATE Utilisateurs SET `mdp`='".$newpassw."' WHERE `username` = '".$utilisateur."'";
         if(mysqli_query($conn,$sql2)) {
           $message = "Mise à jour du mot de passe réussie";
         } else {
