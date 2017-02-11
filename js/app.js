@@ -7,6 +7,8 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   //La liste des utilisateurs, pour la page "comptes.php"
   $scope.utilisateurs = ["admin","stagiaire"];
 
+  $scope.nbrVentesHisto = 100;
+
   // optient la date et la met au bon format AAAA-MM-JJ dans $scope.today et $scope.thisMonth (pour le montant des ventes par période):
   $scope.ojd = new Date();
   var month = $scope.ojd.getUTCMonth() + 1; //mois de 1 à 12

@@ -132,10 +132,11 @@ if ($util != "admin") {
             <!--   -->
                 <td>Retraits<input type="radio" ng-model="historique" value="histoRetrait"></td>
                 <td>Ventes Détaillées <input type="radio" ng-model="historique" value="histoTotal"></td>
-                <td colspan="4"></td>
+                <td>Afficher: <input type="number" ng-model="nbrVentesHisto" class="quantite" style="width:50px">ventes sur {{ventes.length}}</td>
+                <td colspan="3"></td>
             </tr>
             <!-- Le premier groupBy réuni en une ligne (<tr>) chaque date, en commençant par la plus recente avec (reverse) -->
-            <tr ng-show="historique == 'ventesGroupees'" ng-repeat="(key, value) in ventes | reverse | limitTo:100 | groupBy: 'date_vente'  ">
+            <tr ng-show="historique == 'ventesGroupees'" ng-repeat="(key, value) in ventes | reverse | limitTo:nbrVentesHisto | groupBy: 'date_vente'  ">
               <td colspan="7"> {{key}} :
                 <ul>
                   <!-- Le second groupBy réuni les ventes de même produits, et indique son nom (key2) et le nombre (value.length) -->
