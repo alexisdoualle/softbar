@@ -129,23 +129,21 @@ if ($util != "admin") {
             </tr>
             <tr>
                 <td>Ventes <input type="radio" ng-model="historique" value="ventesGroupees"></td>
-            <!--  Ventes Récentes<input type="radio" ng-model="historique" value="histoVentes"> -->
-                <td>Mouvements de caisse<input type="radio" ng-model="historique" value="histoCaisse"></td>
+            <!--   -->
+                <td>Retraits<input type="radio" ng-model="historique" value="histoRetrait"></td>
                 <td>Ventes Détaillées <input type="radio" ng-model="historique" value="histoTotal"></td>
                 <td colspan="4"></td>
             </tr>
+            <!-- Le premier groupBy réuni en une ligne (<tr>) chaque date, en commençant par la plus recente avec (reverse) -->
             <tr ng-show="historique == 'ventesGroupees'" ng-repeat="(key, value) in ventes | reverse | limitTo:100 | groupBy: 'date_vente'  ">
               <td colspan="7"> {{key}} :
                 <ul>
-                  <li ng-repeat="(k2,v2) in value | groupBy: 'produit'">{{k2}} : {{(value | filter:k2).length}}</li>
+                  <!-- Le second groupBy réuni les ventes de même produits, et indique son nom (key2) et le nombre (value.length) -->
+                  <li ng-repeat="(produit, value2) in value | groupBy: 'produit'">{{produit}} : {{(value | filter:key2).length}}</li>
                 </ul>
               </td>
-      <!--  </tr>
-              <tr ng-show="historique == 'histoVentes'" ng-repeat="vente in ventes | reverse | limitTo: 50 ">
-              <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
-            </tr>
-      -->    <tr ng-show="historique == 'histoCaisse'" ng-repeat="mouvement in mouvements | reverse">
-              <td colspan="7">{{mouvement.date_mouvement}}, montant: {{mouvement.montant}} €</td>
+            <tr ng-show="historique == 'histoRetrait'" ng-repeat="retrait in retraits | reverse">
+              <td colspan="7">{{retrait.date_retrait}}, montant du retrait: {{retrait.montant_retrait}} €</td>
             </tr>
             <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse | limitTo:100">
               <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>

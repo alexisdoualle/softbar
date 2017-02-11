@@ -10,17 +10,20 @@ $produit = mysqli_real_escape_string($conn,$data->produit);
 $quantite = mysqli_real_escape_string($conn,$data->quantite);
 $prix = mysqli_real_escape_string($conn,$data->prix);
 $caisse = mysqli_real_escape_string($conn,$data->caisse);
+$montantRetrait = mysqli_real_escape_string($conn,$data->montantRetrait);
 
 
-if (!$produit) { //si produit n'est pas défini, c'est que la caisse est mise à jour uniquement
-  $sql3 = "INSERT INTO Mouvements (`nouveau_montant`) VALUES (".$caisse.")";
+
+if ($montantRetrait) { //si montantRetrait est défini, on le rajoute à la BdD
+  $sql3 = "INSERT INTO Retraits (`montant_retrait`) VALUES (".$montantRetrait.")";
   if(mysqli_query($conn,$sql3)) {
-    echo "Mise à jour du mouvement de caisse";
+    echo "Mise à jour des retraits";
   } else {
-    echo "Erreur dans la mise à jour des données caisse: " . mysqli_error($conn);
+    echo "Erreur dans la mise à jour des retraits " . mysqli_error($conn);
   }
-} else {
-  //met à jour le stock
+}
+if ($produit) {
+  //on met à jour le stock
   $sql = "UPDATE Stock SET `quantite`=$quantite WHERE `produit`='".$produit."'";
   print_r($sql2);
   if(mysqli_query($conn,$sql)) {

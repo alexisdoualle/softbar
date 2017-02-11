@@ -2,14 +2,16 @@ app = angular.module('softbar', ['angular.filter']);
 
 
 app.controller('mainCtrl', function($scope, $http, $window) {
+  //la variable scope.historique est initié avec ventesGroupées, pour que cette option soit affichée par défaut dans l'historique en bas de page
   $scope.historique = "ventesGroupees";
+  //La liste des utilisateurs, pour la page "comptes.php"
   $scope.utilisateurs = ["admin","stagiaire"];
-  // optient la date et la met au bon format AAAA-MM-JJ:
+
+  // optient la date et la met au bon format AAAA-MM-JJ dans $scope.today et $scope.thisMonth (pour le montant des ventes par période):
   $scope.ojd = new Date();
   var month = $scope.ojd.getUTCMonth() + 1; //mois de 1 à 12
   var day = $scope.ojd.getDate();
   var year = $scope.ojd.getUTCFullYear();
-
   $scope.today = year + "-" + (month < 10 ? '0' + month : '' + month) + "-" + (day < 10 ? '0' + day : '' + day);
   $scope.thisMonth = year + "-" + (month < 10 ? '0' + month : '' + month);
 
@@ -20,7 +22,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     .success(function(data, status, headers, config) {
         $scope.stock = data.resultat;
         $scope.caisse = data.caisse;
-        $scope.mouvements = data.mouvements;
+        $scope.retraits = data.retraits;
       });
   }
   $scope.getCaisse = getCaisse();
@@ -55,13 +57,14 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   }
 
   //met à jour la caisse:
-  updateCaisse = function() {
+  updateCaisse = function(montantRetrait=undefined) {
     $http({
           method: "post",
           url: "php/majstock.php",
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           data: {
             "caisse":$scope.caisse,
+            "montantRetrait":montantRetrait
           }
       })
       .success(function(data,status,headers,config){
@@ -108,8 +111,11 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   }
 
   $scope.retrait = function() {
-    var montantRetrait = parseInt(prompt('Entrez le montant du retrait'));
-    console.log(montantRetrait);
+    //Converti la valeur entrée par l'utilisateur en float, et change d'éventuelles virgules en points
+    var montantRetrait = parseFloat(prompt('Entrez le montant du retrait en euro (ex: 30,5)').replace(",","."));
+    $scope.caisse -= montantRetrait; // met à jour le montant de la caisse
+    $scope.retraits.push({"date_retrait":$scope.today,"montant_retrait":montantRetrait}); //ajout le retrait dans la liste des retraits
+    updateCaisse(montantRetrait); //met à jour la BdD
   }
 
   //valide la valeur de stock entrée par l'utilisateur avec le bouton 'mettre à jour'
@@ -175,16 +181,6 @@ app.controller('mainCtrl', function($scope, $http, $window) {
 
   } //fin de annulerVendre()
 
-
-  //affiche les options telles que Annnuler, Offrir etc.
-  $scope.option = false;
-  $scope.showOption = function() {
-    if ($scope.option) {
-      $scope.option = false;
-    } else {
-      $scope.option = true;
-    }
-  }
 
   //modifier le montant de la caisse:
   $scope.editCaisse = false;
