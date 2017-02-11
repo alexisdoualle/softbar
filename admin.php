@@ -132,7 +132,7 @@ if ($util != "admin") {
             <!--   -->
                 <td>Retraits<input type="radio" ng-model="historique" value="histoRetrait"></td>
                 <td>Ventes Détaillées <input type="radio" ng-model="historique" value="histoTotal"></td>
-                <td>Afficher: <input type="number" ng-model="nbrVentesHisto" class="quantite" style="width:50px">ventes sur {{ventes.length}}</td>
+                <td>Afficher: <input type="number" ng-model="nbrVentesHisto" class="quantite" style="width:50px"> ventes sur {{ventes.length}}</td>
                 <td colspan="3"></td>
             </tr>
             <!-- Le premier groupBy réuni en une ligne (<tr>) chaque date, en commençant par la plus recente avec (reverse) -->
@@ -151,6 +151,6 @@ if ($util != "admin") {
             </tr>
           </table>
         </div>
-    </div>
+    </div><!-- fin div corps -->
   </body>
 </html>

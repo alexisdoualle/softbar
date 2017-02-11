@@ -17,7 +17,7 @@ if (empty($util) || ($util == "error")) {
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/app.js"></script>
 
-    <title>Application</title>
+    <title>Caisse Villa Lemons</title>
   </head>
   <body ng-app="softbar">
     <div class="corps" ng-controller="mainCtrl">
@@ -39,8 +39,7 @@ if (empty($util) || ($util == "error")) {
               <input type="button" ng-click="vendre(item, 0, 0)" value="VENDRE" class="bouttonVendre">
             </td>
             <td class="stock">
-              <input type="number" ng-model="item.quantite" class="quantite">
-              <input type="button" name="" value="mettre à jour" ng-click="set(item)" class="bouttonValider">
+              {{item.quantite}}
             </td>
             <td class="prix">{{item.prix | number:2}} €</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
@@ -59,26 +58,38 @@ if (empty($util) || ($util == "error")) {
             <td style=""><?php echo $util ?></td>
             <td>Se <a href="php/logout.php">déconnecter</a></td>
           </tr>
-
         </table>
-
-        <table style="background-color:#EEE">
-
-          <tr>
-            <td colspan="7" >
-              <h3>Historique des ventes <input type="checkbox" ng-model="histo"></h3>
-            </td>
-          </tr>
-          <tr>
-
-          </tr>
-          <tr ng-show="histo" ng-repeat="vente in ventes | reverse | limitTo: 20 ">
-            <td colspan="7">{{vente.date_vente}} : {{vente.produit}}</td>
-          </tr>
-        </table>
-
-
-
-    </div>
+          <div class="" style="min-height:500px">
+            <table class="tableHisto">
+              <tr>
+                <td colspan="7" >
+                  <h3>Historique</h3>
+                </td>
+              </tr>
+              <tr>
+                  <td>Ventes <input type="radio" ng-model="historique" value="ventesGroupees"></td>
+              <!--   -->
+                  <td>Retraits<input type="radio" ng-model="historique" value="histoRetrait"></td>
+                  <td>Ventes Détaillées <input type="radio" ng-model="historique" value="histoTotal"></td>
+                  <td>Afficher: <input type="number" ng-model="nbrVentesHisto" class="quantite" style="width:50px"> ventes sur {{ventes.length}}</td>
+                  <td colspan="3"></td>
+              </tr>
+              <!-- Le premier groupBy réuni en une ligne (<tr>) chaque date, en commençant par la plus recente avec (reverse) -->
+              <tr ng-show="historique == 'ventesGroupees'" ng-repeat="(key, value) in ventes | reverse | limitTo:nbrVentesHisto | groupBy: 'date_vente'  ">
+                <td colspan="7"> {{key}} :
+                  <ul>
+                    <!-- Le second groupBy réuni les ventes de même produits, et indique son nom (key2) et le nombre (value.length) -->
+                    <li ng-repeat="(k2,v2) in value | groupBy: 'produit'">{{k2}} : {{(value | filter:k2).length}}</li>
+                  </ul>
+                </td>
+              <tr ng-show="historique == 'histoRetrait'" ng-repeat="retrait in retraits | reverse">
+                <td colspan="7">{{retrait.date_retrait}}, montant du retrait: {{retrait.montant_retrait}} €</td>
+              </tr>
+              <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse | limitTo:100">
+                <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
+              </tr>
+            </table>
+          </div><!-- fin div historique -->
+    </div><!-- fin div corps -->
   </body>
 </html>

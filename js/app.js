@@ -112,6 +112,16 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     });
   }
 
+  //affiche les options telles que Annnuler, Offrir etc.
+  $scope.option = false;
+  $scope.showOption = function() {
+    if ($scope.option) {
+      $scope.option = false;
+    } else {
+      $scope.option = true;
+    }
+  }
+
   $scope.retrait = function() {
     //Converti la valeur entrée par l'utilisateur en float, et change d'éventuelles virgules en points
     var montantRetrait = parseFloat(prompt('Entrez le montant du retrait en euro (ex: 30,5)').replace(",","."));
