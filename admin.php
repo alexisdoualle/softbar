@@ -139,7 +139,7 @@ if ($util != "admin") {
               <td colspan="7"> {{key}} :
                 <ul>
                   <!-- Le second groupBy réuni les ventes de même produits, et indique son nom (key2) et le nombre (value.length) -->
-                  <li ng-repeat="(produit, value2) in value | groupBy: 'produit'">{{produit}} : {{(value | filter:key2).length}}</li>
+                  <li ng-repeat="(k2,v2) in value | groupBy: 'produit'">{{k2}} : {{(value | filter:k2).length}}</li>
                 </ul>
               </td>
             <tr ng-show="historique == 'histoRetrait'" ng-repeat="retrait in retraits | reverse">
