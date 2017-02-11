@@ -17,7 +17,7 @@ if (empty($util) || ($util == "error")) {
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/app.js"></script>
 
-    <title>Caisse Villa Lemons</title>
+    <title>Caisse</title>
   </head>
   <body ng-app="softbar">
     <div class="corps" ng-controller="mainCtrl">
@@ -85,7 +85,7 @@ if (empty($util) || ($util == "error")) {
               <tr ng-show="historique == 'histoRetrait'" ng-repeat="retrait in retraits | reverse">
                 <td colspan="7">{{retrait.date_retrait}}, montant du retrait: {{retrait.montant_retrait}} €</td>
               </tr>
-              <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse | limitTo:100">
+              <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse | limitTo:nbrVentesHisto">
                 <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
               </tr>
             </table>

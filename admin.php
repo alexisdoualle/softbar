@@ -13,7 +13,7 @@ if ($util != "admin") {
     <script src="js/angular.min.js"></script>
     <script src="node_modules/angular-filter/dist/angular-filter.min.js"></script>
     <script src="js/app.js"></script>
-    <title>Application</title>
+    <title>Caisse</title>
   </head>
   <body ng-app="softbar">
     <div class="corps" ng-controller="mainCtrl">
@@ -146,7 +146,7 @@ if ($util != "admin") {
             <tr ng-show="historique == 'histoRetrait'" ng-repeat="retrait in retraits | reverse">
               <td colspan="7">{{retrait.date_retrait}}, montant du retrait: {{retrait.montant_retrait}} €</td>
             </tr>
-            <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse | limitTo:100">
+            <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse | limitTo:nbrVentesHisto">
               <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
             </tr>
           </table>
