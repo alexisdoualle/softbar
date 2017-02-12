@@ -6,7 +6,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   $scope.historique = "ventesGroupees";
   //La liste des utilisateurs, pour la page "comptes.php"
   $scope.utilisateurs = ["admin","stagiaire"];
-
+  //nombres de ventes par défaut affichées dans l'historique, un nombre trop élevé ralentira l'appli.
   $scope.nbrVentesHisto = 100;
 
   // optient la date et la met au bon format AAAA-MM-JJ dans $scope.today et $scope.thisMonth (pour le montant des ventes par période):
