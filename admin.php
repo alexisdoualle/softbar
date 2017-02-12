@@ -45,6 +45,7 @@ if ($util != "admin") {
             </td>
             <td class="prix">{{item.prix | number:2}} €</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} | filter:filterSemaine ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
           </tr>

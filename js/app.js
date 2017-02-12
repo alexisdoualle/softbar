@@ -9,13 +9,33 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   //nombres de ventes par défaut affichées dans l'historique, un nombre trop élevé ralentira l'appli.
   $scope.nbrVentesHisto = 100;
 
-  // optient la date et la met au bon format AAAA-MM-JJ dans $scope.today et $scope.thisMonth (pour le montant des ventes par période):
+  // obtient la date et la met au bon format AAAA-MM-JJ dans $scope.today et $scope.thisMonth (pour le montant des ventes par période):
   $scope.ojd = new Date();
   var month = $scope.ojd.getUTCMonth() + 1; //mois de 1 à 12
   var day = $scope.ojd.getDate();
   var year = $scope.ojd.getUTCFullYear();
   $scope.today = year + "-" + (month < 10 ? '0' + month : '' + month) + "-" + (day < 10 ? '0' + day : '' + day);
   $scope.thisMonth = year + "-" + (month < 10 ? '0' + month : '' + month);
+
+  function getMonday(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  }
+  function joursSemaine(d) {
+    var listeJoursSemaine = [];
+    return ;
+  }
+  $scope.lundi = getMonday($scope.ojd);
+  var monthL = $scope.lundi.getUTCMonth() + 1; //mois de 1 à 12
+  var dayL = $scope.lundi.getDate();
+  var yearL = $scope.lundi.getUTCFullYear();
+  $scope.lundi = yearL + "-" + (monthL < 10 ? '0' + monthL : '' + monthL) + "-" + (dayL < 10 ? '0' + dayL : '' + dayL);
+
+  $scope.filterSemaine = function(item) {
+    return (item.date_vente == $scope.lundi);
+  };
 
 
   //se connecte à la DB pour obtenir les informations de caisse et les mets dans $scope.stock
@@ -107,7 +127,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
             "produit":item.produit}
       })
     .success(function(data, status, headers, config) {
-      console.log("Deleted command sent");
+      console.log("Requête supprimer envoyées");
       //window.location.reload();
     });
   }
@@ -179,7 +199,6 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     indexItem = $scope.ventes.findIndex(trouverItem); //trouve l'index de l'item si il existe (!= -1)
     //vérifie qu'il y ait au moins une vente correspondant à l'item:
     if (indexItem != -1) {
-      console.log($scope.ventes[indexItem]);
       $window.alert("vous avez supprimé la dernière vente de: " + item.produit);
       //ne met à jour la caisse que si la vente n'est ni offerte ni facturée:
       if ($scope.ventes[indexItem].facturer==0 && $scope.ventes[indexItem].offert==0) {
