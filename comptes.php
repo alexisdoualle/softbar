@@ -12,6 +12,7 @@ if ($util != "admin") {
     <title>Login Softbar</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/angular.min.js"></script>
+    <script src="node_modules/angular-filter/dist/angular-filter.min.js"></script>
     <script src="js/app.js"></script>
   </head>
   <body ng-app="softbar">
