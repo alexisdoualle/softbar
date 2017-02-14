@@ -143,11 +143,15 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   }
 
   $scope.retrait = function() {
-    //Converti la valeur entrée par l'utilisateur en float, et change d'éventuelles virgules en points
-    var montantRetrait = parseFloat(prompt('Entrez le montant du retrait en euro (ex: 30,5)').replace(",","."));
-    $scope.caisse -= montantRetrait; // met à jour le montant de la caisse
-    $scope.retraits.push({"date_retrait":$scope.today,"montant_retrait":montantRetrait}); //ajout le retrait dans la liste des retraits
-    updateCaisse(montantRetrait); //met à jour la BdD
+    try {
+      //Converti la valeur entrée par l'utilisateur en float, et change d'éventuelles virgules en points
+      var montantRetrait = parseFloat(prompt('Entrez le montant du retrait en euro (ex: 30,5)').replace(",","."));
+      $scope.caisse -= montantRetrait; // met à jour le montant de la caisse
+      $scope.retraits.push({"date_retrait":$scope.today,"montant_retrait":montantRetrait}); //ajout le retrait dans la liste des retraits
+      updateCaisse(montantRetrait); //met à jour la BdD
+    } catch (e) {
+
+    }
   }
 
   //valide la valeur de stock entrée par l'utilisateur avec le bouton 'mettre à jour'

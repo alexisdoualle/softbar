@@ -7,7 +7,9 @@ h1 {
   padding: 5px;
   text-align: center;
   border: solid 1px #CCC;
+  box-shadow: 0 0 5px 0 #DDD, 0 2px 5px 0 #CCC;
   font-family: arial;
+  min-width: 805px;
 }
 
 h2  {
