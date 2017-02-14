@@ -1,4 +1,5 @@
 <?php
+require_once 'passwordLib.php';
   $error=""; //message d'erreur eventuel
   if (isset($_POST['submit'])) {
     if (empty($_POST['utilisateur']) || empty($_POST['password'])) {
@@ -15,11 +16,15 @@
       $password = stripslashes($password);
       $utilisateur = mysqli_real_escape_string($conn, $utilisateur);
       $password = mysqli_real_escape_string($conn, $password);
-      $sql = "SELECT * FROM Utilisateurs WHERE mdp = '".$password."' AND username = '".$utilisateur."'";
+      $newhash = password_hash($newpassw, PASSWORD_DEFAULT);
+      $sql = "SELECT mdp FROM Utilisateurs WHERE username = '".$utilisateur."'";
       $requete = $conn->query($sql);
+      $rs = $requete->fetch_array(MYSQLI_ASSOC);
+      $hash = $rs["mdp"];
+
       //vérifie l'utilisateur:
-      if (mysqli_num_rows($requete) == 1) {
-        $sql2 = "UPDATE Utilisateurs SET `mdp`='".$newpassw."' WHERE `username` = '".$utilisateur."'";
+      if (password_verify($password, $hash)) {
+        $sql2 = "UPDATE Utilisateurs SET `mdp`='".$newhash."' WHERE `username` = '".$utilisateur."'";
         if(mysqli_query($conn,$sql2)) {
           $message = "Mise à jour du mot de passe réussie";
         } else {

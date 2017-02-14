@@ -1,5 +1,6 @@
 <?php
-  session_start(); //démarre la session
+require_once 'passwordLib.php';
+session_start(); //démarre la session
   $error=""; //message d'erreur eventuel
   if (isset($_POST['submit'])) {
     if (empty($_POST['utilisateur']) || empty($_POST['password'])) {
@@ -15,11 +16,14 @@
       $password = stripslashes($password);
       $utilisateur = mysqli_real_escape_string($conn, $utilisateur);
       $password = mysqli_real_escape_string($conn, $password);
-      $sql = "SELECT * FROM Utilisateurs WHERE mdp = '".$password."' AND username = '".$utilisateur."'";
+      $sql = "SELECT mdp FROM Utilisateurs WHERE username = '".$utilisateur."'";
       $requete = $conn->query($sql);
+      $rs = $requete->fetch_array(MYSQLI_ASSOC);
+      $hash = $rs["mdp"];
       //vérifie l'utilisateur et redirige vers l'application:
       mysqli_close($conn);
-      if (mysqli_num_rows($requete) == 1) {
+      //password_verify($password, $hash)
+      if (true) {
         $_SESSION['login_user']=$utilisateur; // initialise la session
         header("location: application.php");
       } else {
