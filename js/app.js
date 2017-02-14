@@ -59,6 +59,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   $scope.getVentes = getVentes();
 
 
+
   //met à jour la base de données avec $scope.vendre
   updateStock = function(item) {
     $http({
@@ -127,7 +128,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
             "produit":item.produit}
       })
     .success(function(data, status, headers, config) {
-      console.log("Requête supprimer envoyées");
+      console.log("Requête 'supprimer' envoyée");
       //window.location.reload();
     });
   }
@@ -177,6 +178,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     if(item.quantite > 0) {
       item.quantite--;
       $scope.ventes.push({"date_vente":$scope.today,"produit":item.produit,"offert":offert,"facturer":facturer});
+      //Augment la caisse seulement si le produit n'est ni offert ni facturé:
       if(facturer==0 && offert==0) {
         $scope.caisse += item.prix;
       }
@@ -197,15 +199,20 @@ app.controller('mainCtrl', function($scope, $http, $window) {
 
   //annuler vendre un item:
   $scope.annulerVendre = function(item) {
-    function trouverItem(liste) { //fonction trouvant le premier objet contenant item.produit dans ventes[]
-      return liste.produit === item.produit;
+    var indx = -1;
+
+    for (var i = $scope.ventes.length-1; i>0; i--) {
+      if ($scope.ventes[i].produit == item.produit) {
+        console.log($scope.ventes[i]);
+        indx = i;
+        break;
+      }
     }
-    indexItem = $scope.ventes.findIndex(trouverItem); //trouve l'index de l'item si il existe (!= -1)
     //vérifie qu'il y ait au moins une vente correspondant à l'item:
-    if (indexItem != -1) {
+    if (indx != -1) {
       $window.alert("vous avez supprimé la dernière vente de: " + item.produit);
       //ne met à jour la caisse que si la vente n'est ni offerte ni facturée:
-      if ($scope.ventes[indexItem].facturer==0 && $scope.ventes[indexItem].offert==0) {
+      if ($scope.ventes[indx].facturer==0 && $scope.ventes[indx].offert==0) {
         $scope.caisse -= item.prix;
       }
       deleteItem(item); // appelle le formulaire et met à jour la bdd
@@ -228,7 +235,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     }
   }
   //Ajoute un produit, ou le rend actif si il était inactif (à partir de majproduit.php)
-  $scope.ajouterProduit = function(nouveauProduit, nouveauPrix, nouveauStock) {
+  $scope.ajouterProduit = function(nouveauProduit, nouveauPrix=1, nouveauStock=0) {
     $http({
           method: "post",
           url: "php/majproduit.php",

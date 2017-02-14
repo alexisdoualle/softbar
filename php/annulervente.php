@@ -9,7 +9,7 @@ $produit = mysqli_real_escape_string($conn,$data->produit);
 
 $sql = "DELETE FROM Ventes
         WHERE `produit`= '".$produit."'
-        ORDER BY id_vente DESC
+        ORDER BY date_vente DESC
         LIMIT 1";
 
 
