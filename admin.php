@@ -24,7 +24,7 @@ if ($util != "admin") {
             <th></th>
             <th>Stock</th>
             <th>Prix</th>
-            <th>Jour</th>
+            <th style="width:44px">Jour</th>
             <th>Mois</th>
             <th>Total</th>
           </tr>
@@ -45,7 +45,7 @@ if ($util != "admin") {
             </td>
             <td class="prix">{{item.prix | number:2}} €</td>
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
-            <td>{{(ventes | filter:{'produit':item.produit} | filter:filterSemaine ).length }}</td>
+      <!--      <td>{{(ventes | filter:{'produit':item.produit} | filter:filterSemaine ).length }}</td> -->
             <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
           </tr>
@@ -64,9 +64,9 @@ if ($util != "admin") {
             <tr>
               <td colspan="2">Se <a href="php/logout.php">déconnecter</a></td>
               <td colspan="2"></td>
-              <td ng-show="!editCaisse"><input type="button" value="Recompter" ng-click="modifierCaisse()"></td>
-              <td ng-show="editCaisse"><input type="button" value="Valider" ng-click="modifierCaisse()"></td>
-              <td colspan="2"><input type="button" value="Retrait" ng-click="retrait()"></td>
+              <td ng-show="!editCaisse"><input type="button" value="Recompter" ng-click="modifierCaisse()" class="bouttonValider"></td>
+              <td ng-show="editCaisse"><input type="button" value="Valider" ng-click="modifierCaisse()" class="bouttonValider"></td>
+              <td colspan="2"><input type="button" value="Retrait" ng-click="retrait()" class="bouttonValider"></td>
             </tr>
         </table>
         <table class="tableOptions">

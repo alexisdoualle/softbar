@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Login Softbar</title>
+    <title>Login Caisse</title>
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body style="padding: 8% 0 0">
