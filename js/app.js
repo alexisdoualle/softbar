@@ -275,7 +275,7 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     });
   }
 
-  $scope.RenommerProduit = function(item, nouveauNom, nouveauPrix) {
+  $scope.RenommerProduit = function(item, nouveauNom=item.produit, nouveauPrix=item.prix) {
     $http({
           method: "post",
           url: "php/renommer.php",

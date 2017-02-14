@@ -93,7 +93,8 @@ box-shadow: 0 0 20px 0 #BBB, 0 5px 5px 0 #999;
 }
 .vendre {
   width: 25%;
-  min-width: 195px;
+  min-width: 190px;
+  max-width: 200px;
 }
 .prix {
   min-width: 50px;
@@ -106,7 +107,7 @@ box-shadow: 0 0 20px 0 #BBB, 0 5px 5px 0 #999;
 }
 
 .produit {
-  width: 10%;
+  min-width: 100px;
 }
 
 .quantite {
