@@ -44,10 +44,10 @@ if ($util != "admin") {
               <input type="button" name="" value="mettre à jour" ng-click="set(item)" class="bouttonValider">
             </td>
             <td class="prix">{{item.prix | number:2}} €</td>
-            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
+            <td>{{(ventes | filter: {'produit':item.produit} : true | filter:{'date_vente':today} ).length }}</td>
       <!--      <td>{{(ventes | filter:{'produit':item.produit} | filter:filterSemaine ).length }}</td> -->
-            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
-            <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} : true | filter:{'date_vente':thisMonth} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} : true ).length }}</td>
           </tr>
           <tr>
             <td>Utilisateur: </td>

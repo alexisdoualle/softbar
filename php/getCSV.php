@@ -1,6 +1,6 @@
 <?php
 //ini_set('display_errors',1);
-//include 'connexiondb.php';
+//include 'connexiondb.php'; //enlever le commentaire pour lancer le script
 $row = 1;
 ini_set('auto_detect_line_endings',TRUE);
 if (($handle = fopen("caisse2.csv", "r")) !== FALSE) {

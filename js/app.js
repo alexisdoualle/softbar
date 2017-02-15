@@ -203,7 +203,6 @@ app.controller('mainCtrl', function($scope, $http, $window) {
 
     for (var i = $scope.ventes.length-1; i>0; i--) {
       if ($scope.ventes[i].produit == item.produit) {
-        console.log($scope.ventes[i]);
         indx = i;
         break;
       }
@@ -219,7 +218,9 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       item.quantite++;
       updateStock(item);
       getVentes(); //rafraichit $scope.ventes
-    } //else: aucune vente correspondante trouvée
+    } else {
+      $window.alert("Aucune vente trouvé pour: " + item.produit);
+    }
 
   } //fin de annulerVendre()
 
