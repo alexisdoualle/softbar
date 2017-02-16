@@ -42,9 +42,9 @@ if (empty($util) || ($util == "error")) {
               {{item.quantite}}
             </td>
             <td class="prix">{{item.prix | number:2}} €</td>
-            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':today} ).length }}</td>
-            <td>{{(ventes | filter:{'produit':item.produit} | filter:{'date_vente':thisMonth} ).length }}</td>
-            <td>{{(ventes | filter:{'produit':item.produit} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} : true | filter:{'date_vente':today} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} : true | filter:{'date_vente':thisMonth} ).length }}</td>
+            <td>{{(ventes | filter:{'produit':item.produit} : true ).length }}</td>
           </tr>
           <tr>
             <td style="background-color:#EEE"></td>

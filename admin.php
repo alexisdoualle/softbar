@@ -15,7 +15,11 @@ if ($util != "admin") {
     <script src="js/app.js"></script>
     <title>Caisse</title>
   </head>
+  <!-- ng-app initialise l'application angularjs, telle que définie dans app.js-->
   <body ng-app="softbar">
+    <!-- Le controleur 'mainCtrl' manipule l'application.
+        Il contient les variables et méthodes qui seront utilisées, ainsi que les données
+    -->
     <div class="corps" ng-controller="mainCtrl">
       <h1>Caisse</h1>
         <table class="tableCaisse">
@@ -28,10 +32,19 @@ if ($util != "admin") {
             <th>Mois</th>
             <th>Total</th>
           </tr>
-          <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js -->
+          <!-- ng-repeat produit la liste des items en fonction de la variable $scope.stock, accessible depuis app.js
+              Cela créera donc un tableau avec une ligne par produit dans l'objet stock
+          -->
           <tr ng-repeat="item in stock | orderBy:'ordre'">
+            <!-- ng-attr-title attribut la valeur 'titre' qui en html s'affiche quand on survole avec le pointeur -->
+            <!-- ng-click lance la fonction correspondante dans app.js -->
+            <!-- ng-style modifie le style CSS en fonction de la valeur de item.couleur -->
+            <!-- les données exprimées comme ça: {{ }} sont affichées en fonction de leur valeur dans $scope,
+                et s'actualisent instantanément. Le symbole | sert à formater l'affichage, ici, un nombre à 2 décimales
+           -->
             <td class="produit" ng-attr-title="rang: {{item.ordre}}" ng-style="{'background-color':(item.couleur)}" ng-click="changerCouleur(item)">{{item.produit}}</td>
             <td style="item-align:center" class="vendre">
+              <!-- ng-show ne montre que les élements en fonction de la variable option, de base FALSE -->
               <input ng-show="!option" type="button" ng-click="vendre(item, 0, 0)" value="VENDRE" class="bouttonVendre">
               <input ng-show="option" type="button" ng-click="annulerVendre(item)" value="Annuler vente" title="Annuler la dernière vente" class="bouttonAnnuler">
               <input ng-show="option" type="button" ng-click="vendre(item, 1, 0)" value="Offrir" title="Offrir" class="bouttonOffrir">
@@ -39,18 +52,23 @@ if ($util != "admin") {
               <input ng-show="!option" type="button" value="&#8594;" ng-click="showOption()" class="bouttonOption" title="plus d'options">
               <input ng-show="option" type="button" value="X" ng-click="showOption()" class="bouttonOption" style="font-size:8px" title="Fermer">
             </td>
+
             <td class="stock">
+              <!-- ng-model affiche les données dans un double-sens, si l'utilisateur les modifie, elles sont
+                  modifiées dans $scope. On peut donc ensuite les manipuler.
+              -->
               <input type="number" ng-model="item.quantite" class="quantite">
               <input type="button" name="" value="mettre à jour" ng-click="set(item)" class="bouttonValider">
             </td>
             <td class="prix">{{item.prix | number:2}} €</td>
             <td>{{(ventes | filter: {'produit':item.produit} : true | filter:{'date_vente':today} ).length }}</td>
-      <!--      <td>{{(ventes | filter:{'produit':item.produit} | filter:filterSemaine ).length }}</td> -->
+      <!-- test "semaine" <td>{{(ventes | filter:{'produit':item.produit} | filter:filterSemaine ).length }}</td> -->
             <td>{{(ventes | filter:{'produit':item.produit} : true | filter:{'date_vente':thisMonth} ).length }}</td>
             <td>{{(ventes | filter:{'produit':item.produit} : true ).length }}</td>
           </tr>
           <tr>
             <td>Utilisateur: </td>
+            <!-- La variable PHP $util de la sesssion est affichée ici -->
             <td><?php echo $util ?></td>
             <td><a href="comptes.php">Gérer comptes</a></td>
             <td></td>
@@ -68,7 +86,8 @@ if ($util != "admin") {
               <td ng-show="editCaisse"><input type="button" value="Valider" ng-click="modifierCaisse()" class="bouttonValider"></td>
               <td colspan="2"><input type="button" value="Retrait" ng-click="retrait()" class="bouttonValider"></td>
             </tr>
-        </table>
+        </table><!-- Fin de la première table -->
+
         <table class="tableOptions">
           <tr>
             <td>
@@ -120,8 +139,10 @@ if ($util != "admin") {
               <input type="button" value="Valider" ng-click="reordonner(produitOrdre, nouvelOrdre)" class="btn">
             </td>
           </tr>
-        </table>
+        </table> <!-- fin de la deuxième table -->
         <div class="" style="min-height:500px">
+
+          <!-- HISTORIQUE -->
           <table class="tableHisto">
             <tr>
               <td colspan="7" >
