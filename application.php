@@ -36,7 +36,7 @@ if (empty($util) || ($util == "error")) {
           <tr ng-repeat="item in stock | orderBy:'ordre'">
             <td class="produit" ng-attr-title="{{item.ordre}}" ng-style="{'background-color':(item.couleur)}">{{item.produit}}</td>
             <td style="item-align:center" class="vendre">
-              <input type="button" ng-click="vendre(item, 0, 0)" value="VENDRE" class="bouttonVendre">
+              <input type="button" ng-click="vendre(item, stagiaire, 0, 0)" value="VENDRE" class="bouttonVendre">
             </td>
             <td class="stock">
               {{item.quantite}}
@@ -86,7 +86,7 @@ if (empty($util) || ($util == "error")) {
                 <td colspan="7">{{retrait.date_retrait}}, montant du retrait: {{retrait.montant_retrait}} €</td>
               </tr>
               <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse | limitTo:nbrVentesHisto">
-                <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
+                <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}} (vendeur: {{vente.vendeur}})</td>
               </tr>
             </table>
           </div><!-- fin div historique -->

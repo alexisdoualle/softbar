@@ -7,7 +7,7 @@ $date = date("Y-m-d"); // aujourd'hui
 include 'connexiondb.php';
 
 //requête pour la journée:
-$req_jour = "SELECT date_vente, DATE(date_vente), produit, offert, facturer FROM Ventes ORDER BY date_vente ASC";
+$req_jour = "SELECT date_vente, DATE(date_vente), produit, vendeur, offert, facturer FROM Ventes ORDER BY date_vente ASC";
 //WHERE date(date_vente) = '".$date."'
 $result = $conn->query($req_jour);
 
@@ -19,6 +19,7 @@ while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     $outp .= '{"heure_vente":"'  . $rs["date_vente"] . '",';
     $outp .= '"date_vente":"'  . $rs["DATE(date_vente)"] . '",';
     $outp .= '"produit":"'. $rs["produit"]                . '",';
+    $outp .= '"vendeur":"'  . $rs["vendeur"]                . '",';
     $outp .= '"offert":'. $rs["offert"]                . ',';
     $outp .= '"facturer":'. $rs["facturer"]  .'}';
 }

@@ -9,6 +9,9 @@ app.controller('mainCtrl', function($scope, $http, $window) {
   //nombres de ventes par défaut affichées dans l'historique, un nombre trop élevé ralentira l'appli.
   $scope.nbrVentesHisto = 100;
 
+  $scope.admin = 'admin';
+  $scope.stagiaire = 'stagiaire';
+
   // obtient la date et la met au bon format AAAA-MM-JJ dans $scope.today et $scope.thisMonth (pour le montant des ventes par période):
   $scope.ojd = new Date();
   var month = $scope.ojd.getUTCMonth() + 1; //mois de 1 à 12
@@ -97,14 +100,14 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       });
   }
 
-  updateVentes = function(item, offert, facturer, dateVente=$scope.today) {
+  updateVentes = function(item, vendeur, offert, facturer, dateVente=$scope.today) {
     $http({
           method: "post",
           url: "php/insertVente.php",
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           data: {
             "produit":item.produit,
-            "vendeur":'admin',
+            "vendeur":vendeur,
             "dateVente":dateVente,
             "offert":offert,
             "facturer":facturer
@@ -143,6 +146,24 @@ app.controller('mainCtrl', function($scope, $http, $window) {
     }
   }
 
+  $scope.exporterCSV = function() {
+    $http.get("php/exportbd.php")
+    .success(function(data, status, headers, config) {
+         var anchor = angular.element('<a/>');
+         anchor.css({display: 'none'}); // Pour Firefox
+         angular.element(document.body).append(anchor); // Pour Firefox
+         anchor.attr({
+             href: 'data:attachment/csv;charset=utf-8,' + encodeURIComponent(data),
+             target: '_blank',
+             download: 'ventes'+ $scope.today +'.csv'
+         })[0].click();
+         anchor.remove(); // Pour Firefox
+      }).
+      error(function(data, status, headers, config) {
+        // handle error
+      });
+  }
+
   $scope.retrait = function() {
     try {
       //Converti la valeur entrée par l'utilisateur en float, et change d'éventuelles virgules en points
@@ -173,10 +194,10 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       updateStock(item);
     }
   }
-  //vendre un item:
-  $scope.vendre = function(item, offert=0, facturer=0, date_vente=$scope.today) {
-    if(item.quantite > 0) {
-      item.quantite--;
+  //vendre un item (par défaut, il n'est ni offert ni facturé, et la date de vente est aujourd'hui):
+  $scope.vendre = function(item, vendeur, offert=0, facturer=0, date_vente=$scope.today) {
+    if(item.quantite > 0) { //vérifie si le stock est supérieur à 0:
+      item.quantite--; //décrémente le stock
       $scope.ventes.push({"date_vente":$scope.today,"produit":item.produit,"offert":offert,"facturer":facturer});
       //Augment la caisse seulement si le produit n'est ni offert ni facturé:
       if(facturer==0 && offert==0) {
@@ -184,7 +205,8 @@ app.controller('mainCtrl', function($scope, $http, $window) {
       }
       console.log("vente effectuée");
       updateStock(item);
-      updateVentes(item,offert,facturer,date_vente);
+      updateVentes(item,vendeur,offert,facturer,date_vente);
+      console.log(vendeur);
     } else {
       alert("Le stock est insuffisant. Augmentez-le avant de vendre");
     }

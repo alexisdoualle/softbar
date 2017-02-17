@@ -12,8 +12,7 @@ $dateVente = mysqli_real_escape_string($conn,$data->dateVente);
 $offert = mysqli_real_escape_string($conn,$data->offert);
 $facturer = mysqli_real_escape_string($conn,$data->facturer);
 
-$sql = "INSERT INTO `Ventes`(`vendeur`, `produit`, `date_vente`, `offert`, `facturer`) VALUES ('admin', '".$produit."','".$dateVente." ".date('H:i:s')."',".$offert.",".$facturer.")";
-
+$sql = "INSERT INTO `Ventes`(`vendeur`, `produit`, `date_vente`, `offert`, `facturer`) VALUES ('".$vendeur."', '".$produit."','".$dateVente." ".date('H:i:s')."',".$offert.",".$facturer.")";
 if(mysqli_query($conn,$sql)) { //envoie la requete
   echo "Mise à jour des données";
 } else {

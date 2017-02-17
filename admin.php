@@ -45,10 +45,10 @@ if ($util != "admin") {
             <td class="produit" ng-attr-title="rang: {{item.ordre}}" ng-style="{'background-color':(item.couleur)}" ng-click="changerCouleur(item)">{{item.produit}}</td>
             <td style="item-align:center" class="vendre">
               <!-- ng-show ne montre que les élements en fonction de la variable option, de base FALSE -->
-              <input ng-show="!option" type="button" ng-click="vendre(item, 0, 0)" value="VENDRE" class="bouttonVendre">
+              <input ng-show="!option" type="button" ng-click="vendre(item, admin, 0, 0)" value="VENDRE" class="bouttonVendre">
               <input ng-show="option" type="button" ng-click="annulerVendre(item)" value="Annuler vente" title="Annuler la dernière vente" class="bouttonAnnuler">
-              <input ng-show="option" type="button" ng-click="vendre(item, 1, 0)" value="Offrir" title="Offrir" class="bouttonOffrir">
-              <input ng-show="option" type="button" ng-click="vendre(item, 0, 1 )" value="Facturé" title="Facturer" class="bouttonFacturer">
+              <input ng-show="option" type="button" ng-click="vendre(item, admin, 1, 0)" value="Offrir" title="Offrir" class="bouttonOffrir">
+              <input ng-show="option" type="button" ng-click="vendre(item, admin, 0, 1 )" value="Facturé" title="Facturer" class="bouttonFacturer">
               <input ng-show="!option" type="button" value="&#8594;" ng-click="showOption()" class="bouttonOption" title="plus d'options">
               <input ng-show="option" type="button" value="X" ng-click="showOption()" class="bouttonOption" style="font-size:8px" title="Fermer">
             </td>
@@ -127,7 +127,7 @@ if ($util != "admin") {
               <input type="checkbox" name="offert" ng-model="offert">
               <label for="facturé">facturé</label>
               <input type="checkbox" name="facturé" ng-model="facturer">
-              <input type="button" value="Valider" ng-click="ajouterVente(produitVente,offert,facturer,dateVente)" class="btn">
+              <input type="button" value="Valider" ng-click="ajouterVente(produitVente,admin,offert,facturer,dateVente)" class="btn">
             </td>
           </tr>
           <tr>
@@ -155,7 +155,8 @@ if ($util != "admin") {
                 <td>Retraits<input type="radio" ng-model="historique" value="histoRetrait"></td>
                 <td>Ventes Détaillées <input type="radio" ng-model="historique" value="histoTotal"></td>
                 <td>Afficher: <input type="number" ng-model="nbrVentesHisto" class="quantite" style="width:50px"> ventes sur {{ventes.length}}</td>
-                <td colspan="3"></td>
+                <td><input type="button" value="Exporter CSV" ng-click="exporterCSV()" class="btn"></td>
+                <td colspan="2"></td>
             </tr>
             <!-- Le premier groupBy réuni en une ligne (<tr>) chaque date, en commençant par la plus recente avec (reverse) -->
             <tr ng-show="historique == 'ventesGroupees'" ng-repeat="(key, value) in ventes | reverse | limitTo:nbrVentesHisto | groupBy: 'date_vente'  ">
@@ -169,7 +170,7 @@ if ($util != "admin") {
               <td colspan="7">{{retrait.date_retrait}}, montant du retrait: {{retrait.montant_retrait}} €</td>
             </tr>
             <tr ng-show="historique == 'histoTotal'" ng-repeat="vente in ventes | reverse | limitTo:nbrVentesHisto">
-              <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}}</td>
+              <td colspan="7">{{vente.heure_vente}} : {{vente.produit}} {{(vente.facturer ? "- facturé": "" )}}{{(vente.offert ? "- offert": "" )}} - (vendeur: {{vente.vendeur}})</td>
             </tr>
           </table>
         </div>
